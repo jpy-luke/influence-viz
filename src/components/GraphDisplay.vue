@@ -9,12 +9,12 @@ import noverlap from 'graphology-layout-noverlap'
 
 export default {
   data() {
-    const positions: Map<string, {x: number, y: number}> = new Map();
-    positions.set('Raw Material', { x: -600, y: 0 });
-    positions.set('Refined Material', { x: -400, y: 0 });
-    positions.set('Manufactured Good', { x: 0, y: 0 });
-    positions.set('Crop', { x: 0, y: -100 });
-    positions.set('Assembly', { x: 400, y: 0 });
+    const renderHints: Map<string, {x: number, y: number, color: string}> = new Map();
+    renderHints.set('Raw Material', { x: -600, y: 0, color: '#20ee20' });
+    renderHints.set('Refined Material', { x: -400, y: 0, color: '#29a795' });
+    renderHints.set('Manufactured Good', { x: 200, y: 0, color: '#846c1f' });
+    renderHints.set('Crop', { x: 500, y: -300, color: '#ca5706' });
+    renderHints.set('Assembly', { x: 600, y: 0, color: '#8f24d7' });
 
     const graph = new MultiDirectedGraph({ multi: true })
     const products: model.Product[] = model.createProducts()
@@ -22,13 +22,13 @@ export default {
 
     products.forEach((product, index) => {
       graph.addNode(product.name, {
-        x: positions.get(product.classification).x + 100 * Math.floor(positions.get(product.classification).y / 900),
-        y: positions.get(product.classification).y % 900,
+        x: renderHints.get(product.classification).x + 200 * Math.floor(renderHints.get(product.classification).y / 740),
+        y: renderHints.get(product.classification).y % 740,
         size: 4,
         label: product.name,
-        color: 'green'
+        color: renderHints.get(product.classification).color
       })
-      positions.get(product.classification).y += 20
+      renderHints.get(product.classification).y += 20
     })
     processes.forEach((process, index) => {
       graph.addNode(process.name, { x: 100, y: index * 10, size: 2, label: process.name, color: '#2020dd' })
