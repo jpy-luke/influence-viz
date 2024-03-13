@@ -16,6 +16,125 @@ export class ProductionGraph {
     })
   }
 
+  public resetGraph() {
+    this.graph = new MultiDirectedGraph({ multi: true })
+  }
+
+  public addProduct(product: string, x = 0, y = 0) {
+    const newProduct = this.productMap.get(product)
+    if (newProduct) {
+      if (!this.graph.hasNode(newProduct.name)) {
+        this.graph.addNode(newProduct.name, { x: x, y: y, size: 4, label: newProduct.name, color: '#20ee20' })
+
+        for (const process of newProduct.outputFrom) {
+          if (this.graph.hasNode(process.name)) {
+            this.graph.addDirectedEdge(process.name, newProduct.name, { label: process.name, color: '#24a4cc' })
+          }
+        }
+        for (const process of newProduct.inputFor) {
+          if (this.graph.hasNode(process.name)) {
+            this.graph.addDirectedEdge(newProduct.name, process.name, { label: process.name, color: '#107030' })
+          }
+        }
+      }
+    }
+  }
+
+  public addProcess(process: string, x = 0, y = 0) {
+    const newProcess = this.processMap.get(process)
+    if (newProcess) {
+      if (!this.graph.hasNode(newProcess.name)) {
+        this.graph.addNode(newProcess.name, { x: x, y: y, size: 2, label: newProcess.name, color: '#2020dd' })
+
+        for(const product of newProcess.inputs.keys()) {
+          if(this.graph.hasNode(product.name)) {
+            this.graph.addDirectedEdge(product.name, newProcess.name, { label: newProcess.name, color: '#107030' })
+          }
+        }
+
+        for(const product of newProcess.outputs.keys()) {
+          if(this.graph.hasNode(product.name)) {
+            this.graph.addDirectedEdge(newProcess.name, product.name, { label: newProcess.name, color: '#24a4cc' })
+          }
+        }
+      }
+    }
+  }
+
+  public addConsumersForProduct(product: string) {
+    const targetProduct = this.productMap.get(product)
+    if (targetProduct) {
+      const { x, y } = this.graph.getNodeAttributes(targetProduct.name)
+      const numProcesses = targetProduct.inputFor.length
+      const yStart = y - (100 * numProcesses) / 2
+      targetProduct.inputFor.forEach((process, index) => {
+        if(!this.graph.hasNode(process.name)) {
+          this.addProcess(process.name, x + 100, yStart + 100 * index)
+        }
+        this.graph.addDirectedEdge(targetProduct.name, process.name, { label: process.name, color: '#107030' })
+      })
+    }
+  }
+
+  public addSourcesForProduct(product: string) {
+    const targetProduct = this.productMap.get(product)
+    if (targetProduct) {
+      const { x, y } = this.graph.getNodeAttributes(targetProduct.name)
+      const numProcesses = targetProduct.outputFrom.length
+      const yStart = y - (100 * numProcesses) / 2
+      targetProduct.outputFrom.forEach((process, index) => {
+        if(!this.graph.hasNode(process.name)) {
+          this.addProcess(process.name, x - 100, yStart + 100 * index)
+        }
+        this.graph.addDirectedEdge(process.name, targetProduct.name, { label: process.name, color: '#24a4cc' })
+      })
+    }
+  }
+
+  public addOutputsForProcess(process: string) {
+    const targetProcess = this.processMap.get(process)
+    if (targetProcess) {
+      const { x, y } = this.graph.getNodeAttributes(targetProcess.name)
+      const numProducts = targetProcess.outputs.size
+      const yStart = y - (100 * numProducts) / 2
+      Array.from(targetProcess.outputs.keys()).forEach((product, index) => {
+        if(!this.graph.hasNode(product.name)) {
+          this.addProduct(product.name, x + 100, yStart + 100 * index)
+        }
+        this.graph.addDirectedEdge(targetProcess.name, product.name, { label: targetProcess.name, color: '#24a4cc' })
+      })
+    }
+  }
+
+  public addInputsForProcess(process: string) {
+    const targetProcess = this.processMap.get(process)
+    if (targetProcess) {
+      const { x, y } = this.graph.getNodeAttributes(targetProcess.name)
+      const numProducts = targetProcess.inputs.size
+      const yStart = y - (100 * numProducts) / 2
+      Array.from(targetProcess.inputs.keys()).forEach((product, index) => {
+        if(!this.graph.hasNode(product.name)) {
+          this.addProduct(product.name, x - 100, yStart + 100 * index)
+        }
+        this.graph.addDirectedEdge(product.name, targetProcess.name, { label: targetProcess.name, color: '#107030' })
+      })
+    }
+  }
+
+  public removeProduct(product: string) {
+    const targetProduct = this.productMap.get(product)
+    if (targetProduct && this.graph.hasNode(product)) {
+      this.graph.dropNode(targetProduct.name)
+    }
+  }
+
+  public removeProcess(process: string) {
+    const targetProcess = this.processMap.get(process)
+    if (targetProcess && this.graph.hasNode(process)) {
+      this.graph.dropNode(targetProcess.name)
+    }
+  }
+
   public initializeTotalGraph() {
     const renderHints: Map<string, { x: number, y: number, color: string }> = new Map()
     renderHints.set('Raw Material', { x: -600, y: 0, color: '#20ee20' })
