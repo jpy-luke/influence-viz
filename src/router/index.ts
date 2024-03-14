@@ -5,8 +5,8 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'graph',
-      component: () => import('../views/GraphView.vue')
+      name: 'products-browser',
+      component: () => import('../views/ProductsBrowser.vue')
     }
   ]
 })

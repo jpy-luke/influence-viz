@@ -6,7 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <header>
     <div class="wrapper">
       <nav>
-        <RouterLink to="/">Influence Products and Processes graph</RouterLink>
+        <RouterLink to="/">Influence Products browser</RouterLink>
       </nav>
     </div>
   </header>
