@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import SelectorItem from '@/components/SelectorItem.vue'
 
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
+
 import { productMap, processMap, Product } from '@/graphing/model'
 
 const productsByClassification = Array.from(productMap.values()).reduce(
@@ -18,12 +21,13 @@ const productsByClassification = Array.from(productMap.values()).reduce(
 
 <template>
   <div class="node-selector">
-    <div v-for="classification in Object.keys(productsByClassification)" :key="classification">
-      <h2>{{ classification }}</h2>
-      <div v-for="product in productsByClassification[classification]" :key="product.name">
-        <SelectorItem :label="product.name" type="product" />
-      </div>
-    </div>
+    <Accordion :active-index="0">
+      <AccordionTab v-for="classification in Object.keys(productsByClassification)" :key="classification" :header="classification">
+        <div v-for="product in productsByClassification[classification]" :key="product.name">
+          <SelectorItem :label="product.name" type="product" />
+        </div>
+      </AccordionTab>
+    </Accordion>
   </div>
 </template>
 
