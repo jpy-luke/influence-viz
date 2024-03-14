@@ -1,5 +1,5 @@
-import processes from './process';
-import products from './product';
+import processSource from './process'
+import productSource from './product'
 
 interface RawProduct {
   i: number;
@@ -12,20 +12,20 @@ interface RawProduct {
 }
 
 class Product {
-  i: number;
+  i: number
   category: string
   classification: string
   name: string
-  inputFor: Array<Process>;
-  outputFrom: Array<Process>;
+  inputFor: Array<Process>
+  outputFrom: Array<Process>
 
   constructor(rawProduct: RawProduct) {
-    this.i = rawProduct.i;
-    this.name = rawProduct.name;
-    this.classification = rawProduct.classification;
-    this.category = rawProduct.category;
-    this.inputFor = [];
-    this.outputFrom = [];
+    this.i = rawProduct.i
+    this.name = rawProduct.name
+    this.classification = rawProduct.classification
+    this.category = rawProduct.category
+    this.inputFor = []
+    this.outputFrom = []
   }
 }
 
@@ -42,44 +42,53 @@ interface RawProcess {
 }
 
 class Process {
-  i: number;
-  name: string;
-  inputs: Map<Product, number>;
-  outputs: Map<Product, number>;
+  i: number
+  name: string
+  inputs: Map<Product, number>
+  outputs: Map<Product, number>
 
   constructor(rawProcess: RawProcess, products: Array<Product>) {
-    this.i = rawProcess.i;
-    this.name = rawProcess.name;
-    this.inputs = new Map();
-    this.outputs = new Map();
+    this.i = rawProcess.i
+    this.name = rawProcess.name
+    this.inputs = new Map()
+    this.outputs = new Map()
 
-    for(const [productId, quantity] of Object.entries(rawProcess.inputs)) {
-      const product = products.find((product) => product.i === parseInt(productId));
+    for (const [productId, quantity] of Object.entries(rawProcess.inputs)) {
+      const product = products.find((product) => product.i === parseInt(productId))
       if (product) {
-        this.inputs.set(product, quantity);
-        product.inputFor.push(this);
+        this.inputs.set(product, quantity)
+        product.inputFor.push(this)
       }
     }
 
-    for(const [productId, quantity] of Object.entries(rawProcess.outputs)) {
-      const product = products.find((product) => product.i === parseInt(productId));
+    for (const [productId, quantity] of Object.entries(rawProcess.outputs)) {
+      const product = products.find((product) => product.i === parseInt(productId))
       if (product) {
-        this.outputs.set(product, quantity);
-        product.outputFrom.push(this);
+        this.outputs.set(product, quantity)
+        product.outputFrom.push(this)
       }
     }
   }
 }
 
-function createProducts() : Array<Product> {
-  const a = products.TYPES;
-  return Object.values(products.TYPES as {number:RawProduct})
-    .map((product) => new Product(product));
+function createProducts(): Map<string, Product> {
+  const retval = new Map()
+  Object.values(productSource.TYPES as { number: RawProduct })
+    .map((product) => new Product(product))
+    .forEach((product) => retval.set(product.name, product))
+  return retval
 }
 
-function createProcesses(products: Array<Product>) : Array<Process> {
-  return Object.values(processes.TYPES as {number:RawProcess})
-    .map((process) => new Process(process, products));
+function createProcesses(productMap: Map<string, Product>): Map<string, Process> {
+  const products = Array.from(productMap.values())
+  const retval = new Map()
+  Object.values(processSource.TYPES as { number: RawProcess })
+    .map((process) => new Process(process, products))
+    .forEach((process) => retval.set(process.name, process))
+  return retval
 }
 
-export { Product, Process, createProducts, createProcesses }
+const productMap = createProducts()
+const processMap = createProcesses(productMap)
+
+export { Product, Process, productMap, processMap }

@@ -3,14 +3,11 @@
 </template>
 <script lang="ts">
 import Sigma from 'sigma'
-import { createProducts, createProcesses } from '@/graphing/model'
 import { ProductionGraph } from '@/graphing/graph'
 
 export default {
   data() {
-    const products = createProducts()
-    const processes = createProcesses(products)
-    const graphHandler = new ProductionGraph(products, processes)
+    const graphHandler = new ProductionGraph()
     graphHandler.initializeTotalGraph()
 
     return {

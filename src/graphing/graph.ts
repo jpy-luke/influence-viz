@@ -1,27 +1,17 @@
 import MultiDirectedGraph from 'graphology'
-import { Process, Product } from '@/graphing/model'
+import { Process, Product, productMap, processMap } from '@/graphing/model'
 import noverlap from 'graphology-layout-noverlap'
 
 export class ProductionGraph {
-  productMap: Map<string, Product> = new Map()
-  processMap: Map<string, Process> = new Map()
   public graph: MultiDirectedGraph = new MultiDirectedGraph({ multi: true })
 
-  constructor(products: Product[], processes: Process[]) {
-    products.forEach((product) => {
-      this.productMap.set(product.name, product)
-    })
-    processes.forEach((process) => {
-      this.processMap.set(process.name, process)
-    })
-  }
-
+  constructor() {}
   public resetGraph() {
     this.graph = new MultiDirectedGraph({ multi: true })
   }
 
   public addProduct(product: string, x = 0, y = 0) {
-    const newProduct = this.productMap.get(product)
+    const newProduct = productMap.get(product)
     if (newProduct) {
       if (!this.graph.hasNode(newProduct.name)) {
         this.graph.addNode(newProduct.name, { x: x, y: y, size: 4, label: newProduct.name, color: '#20ee20' })
@@ -41,7 +31,7 @@ export class ProductionGraph {
   }
 
   public addProcess(process: string, x = 0, y = 0) {
-    const newProcess = this.processMap.get(process)
+    const newProcess = processMap.get(process)
     if (newProcess) {
       if (!this.graph.hasNode(newProcess.name)) {
         this.graph.addNode(newProcess.name, { x: x, y: y, size: 2, label: newProcess.name, color: '#2020dd' })
@@ -62,7 +52,7 @@ export class ProductionGraph {
   }
 
   public addConsumersForProduct(product: string) {
-    const targetProduct = this.productMap.get(product)
+    const targetProduct = productMap.get(product)
     if (targetProduct) {
       const { x, y } = this.graph.getNodeAttributes(targetProduct.name)
       const numProcesses = targetProduct.inputFor.length
@@ -77,7 +67,7 @@ export class ProductionGraph {
   }
 
   public addSourcesForProduct(product: string) {
-    const targetProduct = this.productMap.get(product)
+    const targetProduct = productMap.get(product)
     if (targetProduct) {
       const { x, y } = this.graph.getNodeAttributes(targetProduct.name)
       const numProcesses = targetProduct.outputFrom.length
@@ -92,7 +82,7 @@ export class ProductionGraph {
   }
 
   public addOutputsForProcess(process: string) {
-    const targetProcess = this.processMap.get(process)
+    const targetProcess = processMap.get(process)
     if (targetProcess) {
       const { x, y } = this.graph.getNodeAttributes(targetProcess.name)
       const numProducts = targetProcess.outputs.size
@@ -107,7 +97,7 @@ export class ProductionGraph {
   }
 
   public addInputsForProcess(process: string) {
-    const targetProcess = this.processMap.get(process)
+    const targetProcess = processMap.get(process)
     if (targetProcess) {
       const { x, y } = this.graph.getNodeAttributes(targetProcess.name)
       const numProducts = targetProcess.inputs.size
@@ -122,14 +112,14 @@ export class ProductionGraph {
   }
 
   public removeProduct(product: string) {
-    const targetProduct = this.productMap.get(product)
+    const targetProduct = productMap.get(product)
     if (targetProduct && this.graph.hasNode(product)) {
       this.graph.dropNode(targetProduct.name)
     }
   }
 
   public removeProcess(process: string) {
-    const targetProcess = this.processMap.get(process)
+    const targetProcess = processMap.get(process)
     if (targetProcess && this.graph.hasNode(process)) {
       this.graph.dropNode(targetProcess.name)
     }
@@ -145,8 +135,8 @@ export class ProductionGraph {
 
     this.graph = new MultiDirectedGraph({ multi: true })
 
-    const products: Product[] = Array.from(this.productMap.values())
-    const processes: Process[] = Array.from(this.processMap.values())
+    const products: Product[] = Array.from(productMap.values())
+    const processes: Process[] = Array.from(processMap.values())
 
     products.forEach((product, index) => {
       this.graph.addNode(product.name, {
@@ -156,7 +146,7 @@ export class ProductionGraph {
         label: product.name,
         color: renderHints.get(product.classification).color
       })
-      this.productMap.set(product.name, product)
+      productMap.set(product.name, product)
       renderHints.get(product.classification).y += 20
     })
     processes.forEach((process, index) => {
@@ -176,7 +166,7 @@ export class ProductionGraph {
       }
       this.graph.setNodeAttribute(process.name, 'x', posx.reduce((a, b) => a + b, 0) / posx.length - 10)
       this.graph.setNodeAttribute(process.name, 'y', posy.reduce((a, b) => a + b, 0) / posy.length)
-      this.processMap.set(process.name, process)
+      processMap.set(process.name, process)
     })
     noverlap.assign(this.graph)
   }
