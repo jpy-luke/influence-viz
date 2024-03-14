@@ -31,10 +31,11 @@ export default {
 
 <style scoped>
 #sigma-container {
-  width: 100vw;
-  height: 100vh;
+  height: 90vh;
+  width: 95%;
   position: absolute;
-  top: 0;
-  left: 0;
+  background-color: #181818;
+  flex-grow: 1;
+  z-index: 1;
 }
 </style>
