@@ -17,6 +17,10 @@ const productsByClassification = Array.from(productMap.values()).reduce(
   {} as Record<string, Product[]>
 )
 
+for(const classification in productsByClassification) {
+  productsByClassification[classification].sort((a, b) => a.name.localeCompare(b.name))
+}
+
 </script>
 
 <template>
