@@ -38,10 +38,7 @@ for(const classification in productsByClassification) {
 <style>
 .node-selector {
   overflow: scroll;
-  height: 90vh;
-  width: 20vw;
-  position: absolute;
   background: rgba(0,0,0,0.2);
-  z-index: 2;
+  flex: 1;
 }
 </style>
