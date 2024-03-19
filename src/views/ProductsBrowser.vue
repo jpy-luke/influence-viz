@@ -5,7 +5,6 @@ import GraphControls from '@/components/GraphControls.vue'
 import { ProductionGraph } from '@/graphing/graph'
 
 const graphHandler = new ProductionGraph()
-graphHandler.initializeTotalGraph()
 </script>
 
 <template>
