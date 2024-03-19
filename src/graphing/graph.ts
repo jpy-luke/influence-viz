@@ -15,7 +15,7 @@ export class ProductionGraph {
 
   constructor() {}
   public resetGraph() {
-    this.graph = new DirectedGraph({ multi: true })
+    this.graph.clear()
   }
 
   public addProduct(product: string, x = 0, y = 0) {
@@ -164,7 +164,7 @@ export class ProductionGraph {
   }
 
   public initializeTotalGraph() {
-    this.graph = new DirectedGraph({ multi: true })
+    this.resetGraph()
 
     const products: string[] = Array.from(productMap.values()).map((product) => product.name)
     let ycounter = 0

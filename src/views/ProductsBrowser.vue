@@ -10,10 +10,10 @@ graphHandler.initializeTotalGraph()
 
 <template>
   <div class="browser-controls">
-    <GraphControls />
+    <GraphControls :graph-handler="graphHandler" />
     <NodeSelector />
   </div>
-  <GraphDisplay :graph="graphHandler.graph"/>
+  <GraphDisplay :graph="graphHandler.graph" />
 </template>
 
 <style scoped>
@@ -25,7 +25,7 @@ graphHandler.initializeTotalGraph()
   left: 1rem;
   width: 300px;
   height: 100%;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
   z-index: 2;
 }
 </style>
