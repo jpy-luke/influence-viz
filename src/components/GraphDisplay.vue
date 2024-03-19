@@ -6,15 +6,15 @@
 import Sigma from 'sigma'
 import { ProductionGraph } from '@/graphing/graph'
 import { onMounted } from 'vue'
+import type Graph from 'graphology'
 
-const graphHandler = new ProductionGraph()
-graphHandler.initializeTotalGraph()
+const props = defineProps<{graph: Graph}>()
 
 onMounted(() => {
   const container = document.getElementById('sigma-container') as HTMLElement
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const renderer = new Sigma(
-    graphHandler.graph,
+    props.graph,
     container,
     { renderEdgeLabels: true, labelColor: { color: 'gray' } }
   )

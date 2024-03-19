@@ -2,6 +2,10 @@
 import GraphDisplay from '../components/GraphDisplay.vue'
 import NodeSelector from '@/components/NodeSelector.vue'
 import GraphControls from '@/components/GraphControls.vue'
+import { ProductionGraph } from '@/graphing/graph'
+
+const graphHandler = new ProductionGraph()
+graphHandler.initializeTotalGraph()
 </script>
 
 <template>
@@ -9,7 +13,7 @@ import GraphControls from '@/components/GraphControls.vue'
     <GraphControls />
     <NodeSelector />
   </div>
-  <GraphDisplay />
+  <GraphDisplay :graph="graphHandler.graph"/>
 </template>
 
 <style scoped>
