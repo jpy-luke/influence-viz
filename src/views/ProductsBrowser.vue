@@ -10,7 +10,7 @@ const graphHandler = new ProductionGraph()
 <template>
   <div class="browser-controls">
     <GraphControls :graph-handler="graphHandler" />
-    <NodeSelector @productSelected="(label: string) => graphHandler.addProduct(label, 0, 0)"
+    <NodeSelector @productSelected="(label: string) => graphHandler.addProduct(label, 0, 0, true)"
                   @addConsumers="(label: string) => graphHandler.addConsumersForProduct(label)"
                   @addSources="(label: string) => graphHandler.addSourcesForProduct(label)"
     />

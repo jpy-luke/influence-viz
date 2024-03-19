@@ -1,6 +1,6 @@
 import DirectedGraph from 'graphology'
 import { Process, Product, productMap, processMap } from '@/graphing/model'
-import noverlap from 'graphology-layout-noverlap'
+import NoverlapLayout from 'graphology-layout-noverlap/worker'
 
 const renderHints: Map<string, { x: number, y: number, color: string }> = new Map()
 renderHints.set('Raw Material', { x: -600, y: 0, color: '#20ee20' })
@@ -12,13 +12,20 @@ const ySpacing = 50
 
 export class ProductionGraph {
   public graph: DirectedGraph = new DirectedGraph({ multi: true })
+  public layout = new NoverlapLayout(this.graph)
 
   constructor() {}
   public resetGraph() {
     this.graph.clear()
   }
 
-  public addProduct(product: string, x = 0, y = 0) {
+  public toggleLayout() {
+    if (!this.layout.isRunning()) {
+      this.layout.start()
+    }
+  }
+
+  public addProduct(product: string, x = 0, y = 0, triggerLayout = false) {
     const newProduct = productMap.get(product)
     if (newProduct) {
       if (!this.graph.hasNode(newProduct.name)) {
@@ -41,10 +48,13 @@ export class ProductionGraph {
           }
         }
       }
+      if (triggerLayout) {
+        this.layout.start()
+      }
     }
   }
 
-  public addProcess(process: string, x = 0, y = 0) {
+  public addProcess(process: string, x = 0, y = 0, triggerLayout = false) {
     const newProcess = processMap.get(process)
     if (newProcess) {
       if (!this.graph.hasNode(newProcess.name)) {
@@ -62,6 +72,9 @@ export class ProductionGraph {
           }
         }
       }
+      if (triggerLayout) {
+        this.layout.start()
+      }
     }
   }
 
@@ -78,6 +91,7 @@ export class ProductionGraph {
         }
         this.graph.addEdge(targetProduct.name, process.name, { label: process.name, color: '#107030' })
       })
+      this.toggleLayout()
     }
   }
 
@@ -94,6 +108,7 @@ export class ProductionGraph {
         }
         this.graph.addEdge(process.name, targetProduct.name, { label: process.name, color: '#24a4cc' })
       })
+      this.toggleLayout()
     }
   }
 
@@ -109,6 +124,7 @@ export class ProductionGraph {
         }
         this.graph.addEdge(targetProcess.name, product.name, { label: targetProcess.name, color: '#24a4cc' })
       })
+      this.toggleLayout()
     }
   }
 
@@ -126,6 +142,7 @@ export class ProductionGraph {
         }
         this.graph.addEdge(product.name, targetProcess.name, { label: targetProcess.name, color: '#107030' })
       })
+      this.toggleLayout()
     }
   }
 
@@ -174,8 +191,6 @@ export class ProductionGraph {
         ycounter += ySpacing
       }
     })
-
-    noverlap.assign(this.graph)
   }
 }
 
