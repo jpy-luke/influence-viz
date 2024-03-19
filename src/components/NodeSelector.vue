@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import SelectorItem from '@/components/SelectorItem.vue'
 
-import Accordion from 'primevue/accordion';
-import AccordionTab from 'primevue/accordiontab';
+import Accordion from 'primevue/accordion'
+import AccordionTab from 'primevue/accordiontab'
 
-import { productMap, processMap, Product } from '@/graphing/model'
+import { productMap, Product } from '@/graphing/model'
+import type { ProductionGraph } from '@/graphing/graph'
+
+//const props = defineProps<{ graphHandler: ProductionGraph }>()
 
 const productsByClassification = Array.from(productMap.values()).reduce(
   (acc, product) => {
@@ -17,7 +20,7 @@ const productsByClassification = Array.from(productMap.values()).reduce(
   {} as Record<string, Product[]>
 )
 
-for(const classification in productsByClassification) {
+for (const classification in productsByClassification) {
   productsByClassification[classification].sort((a, b) => a.name.localeCompare(b.name))
 }
 
@@ -26,9 +29,14 @@ for(const classification in productsByClassification) {
 <template>
   <div class="node-selector">
     <Accordion :active-index="0">
-      <AccordionTab v-for="classification in Object.keys(productsByClassification)" :key="classification" :header="classification">
+      <AccordionTab v-for="classification in Object.keys(productsByClassification)" :key="classification"
+                    :header="classification">
         <div v-for="product in productsByClassification[classification]" :key="product.name">
-          <SelectorItem :label="product.name" type="product" />
+          <SelectorItem @productSelected="$emit('productSelected', product.name)"
+                        @addConsumers="$emit('addConsumers', product.name)"
+                        @addSources="$emit('addSources', product.name)"
+                        :label="product.name"
+                        type="product" />
         </div>
       </AccordionTab>
     </Accordion>
@@ -38,7 +46,7 @@ for(const classification in productsByClassification) {
 <style>
 .node-selector {
   overflow: scroll;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
   flex: 1;
 }
 </style>
