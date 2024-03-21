@@ -6,8 +6,8 @@ const props = defineProps<{ selectableInputs: string[], selectableOutputs: strin
 </script>
 
 <template>
-  <div :hidden="props.selectedItem == null">
-    <h4 :hidden="props.selectedItem == null">Selected item controls</h4>
+  <div v-if="props.selectedItem != null">
+    <h4>Selected item controls</h4>
     <div>{{ selectedItem }} </div>
     <div class="selectable" @click="$emit('clearSelection')">Remove</div>
     <Accordion :active-index="0">
