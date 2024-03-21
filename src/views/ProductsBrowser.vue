@@ -52,11 +52,16 @@ const expandSelection = (label: string) => {
   }
 }
 
+const onReset = () => {
+  graphHandler.resetGraph()
+  selectedItem.value = null
+}
+
 </script>
 
 <template>
   <div class="browser-controls">
-    <GraphControls :graph-handler="graphHandler" />
+    <GraphControls :graph-handler="graphHandler" :on-reset="onReset" />
 
     <NodeSelector @productSelected="itemSelected" />
   </div>

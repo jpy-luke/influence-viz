@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import type { ProductionGraph } from '@/graphing/graph'
 
-const props = defineProps<{ graphHandler: ProductionGraph }>()
-
-const resetGraph = () => {
-  props.graphHandler.resetGraph()
-}
+const props = defineProps<{ graphHandler: ProductionGraph, onReset: (arg0: Event) => void }>()
 
 const totalGraph = () => {
   props.graphHandler.resetGraph()
@@ -20,7 +16,7 @@ const autoLayout = () => {
 <template>
   <h4>Graph controls</h4>
   <div class="graph-controls">
-    <div class="selectable" @click="resetGraph">Reset</div>
+    <div class="selectable" @click="onReset">Reset</div>
     <div class="selectable" @click="totalGraph">Total</div>
     <div class="selectable" @click="autoLayout">Auto layout</div>
   </div>
