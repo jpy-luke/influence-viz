@@ -34,13 +34,31 @@ const clearSelection = () => {
   selectableOutputs.value = []
 }
 
+const expandSelection = (label: string) => {
+  if (label === 'ALL_INPUTS') {
+    if (selectedIsProduct) {
+      graphHandler.addSourcesForProduct(selectedItem.value)
+    } else {
+      graphHandler.addInputsForProcess(selectedItem.value)
+    }
+  } else if (label === 'ALL_OUTPUTS') {
+    if (selectedIsProduct) {
+      graphHandler.addConsumersForProduct(selectedItem.value)
+    } else {
+      graphHandler.addOutputsForProcess(selectedItem.value)
+    }
+  } else {
+    itemSelected(label)
+  }
+}
+
 </script>
 
 <template>
   <div class="browser-controls">
     <GraphControls :graph-handler="graphHandler" />
     <SelectedNodeControls :selectable-inputs="selectableInputs" :selectable-outputs="selectableOutputs"
-                          @expansionSelected="itemSelected" :selected-item="selectedItem"
+                          @expansionSelected="expandSelection" :selected-item="selectedItem"
                           @clearSelection="clearSelection"
     />
     <NodeSelector @productSelected="itemSelected" />

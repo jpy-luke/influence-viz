@@ -15,12 +15,14 @@ const props = defineProps<{ selectableInputs: string[], selectableOutputs: strin
              @click="$emit('expansionSelected', input)">
           {{ input }}
         </div>
+        <div class="selectable" @click="$emit('expansionSelected', 'ALL_INPUTS')">ALL</div>
       </AccordionTab>
       <AccordionTab v-if="props.selectableOutputs.length >0" header="Consumers / Outputs">
         <div class="selectable" v-for="output in props.selectableOutputs" :key="output"
              @click="$emit('expansionSelected', output)">
           {{ output }}
         </div>
+        <div class="selectable" @click="$emit('expansionSelected', 'ALL_OUTPUTS')">ALL</div>
       </AccordionTab>
     </Accordion>
   </div>
