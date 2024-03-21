@@ -28,14 +28,10 @@ const itemSelected = (label: string) => {
 }
 
 const clearSelection = () => {
+  graphHandler.removeNode(selectedItem.value)
   selectedItem.value = null
   selectableInputs.value = []
   selectableOutputs.value = []
-  if (selectedIsProduct) {
-    graphHandler.removeProduct(selectedItem.value)
-  } else {
-    graphHandler.removeProcess(selectedItem.value)
-  }
 }
 
 </script>

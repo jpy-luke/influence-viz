@@ -156,17 +156,9 @@ export class ProductionGraph {
     }
   }
 
-  public removeProduct(product: string) {
-    const targetProduct = productMap.get(product)
-    if (targetProduct && this.graph.hasNode(product)) {
-      this.graph.dropNode(targetProduct.name)
-    }
-  }
-
-  public removeProcess(process: string) {
-    const targetProcess = processMap.get(process)
-    if (targetProcess && this.graph.hasNode(process)) {
-      this.graph.dropNode(targetProcess.name)
+  public removeNode(name: string) {
+    if (this.graph.hasNode(name)) {
+      this.graph.dropNode(name)
     }
   }
 
