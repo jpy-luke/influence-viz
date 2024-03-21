@@ -16,7 +16,7 @@ onMounted(() => {
   const renderer = new Sigma(
     props.graph,
     container,
-    { renderEdgeLabels: true, labelColor: { color: 'gray' } }
+    { renderEdgeLabels: true, labelColor: { color: 'gray' }, defaultEdgeType: 'arrow' }
   )
 
   renderer.on('downNode', (e) => {
