@@ -8,20 +8,23 @@ import { processMap, productMap } from '@/graphing/model'
 import SelectedNodeControls from '@/components/SelectedNodeControls.vue'
 
 const graphHandler = new ProductionGraph()
+graphHandler.toggleForceLayout()
 let selectedItem = ref(null)
 let selectableInputs = ref([])
 let selectableOutputs = ref([])
 let selectedIsProduct = true
 
+const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min)
+
 const itemSelected = (label: string) => {
   selectedItem.value = label
   selectedIsProduct = productMap.has(label)
   if (selectedIsProduct) {
-    graphHandler.addProduct(label, 0, 0, true)
+    graphHandler.addProduct(label, randomInt(-10, 10), randomInt(-10, 10), true)
     selectableInputs.value = Array.from(productMap.get(label).outputFrom).map((p) => p.name)
     selectableOutputs.value = Array.from(productMap.get(label).inputFor).map((p) => p.name)
   } else {
-    graphHandler.addProcess(label, 0, 0, true)
+    graphHandler.addProcess(label, randomInt(-10, 10), randomInt(-10, 10), true)
     selectableInputs.value = Array.from(processMap.get(label).inputs.keys()).map((p) => p.name)
     selectableOutputs.value = Array.from(processMap.get(label).outputs.keys()).map((p) => p.name)
   }
