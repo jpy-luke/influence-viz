@@ -31,22 +31,38 @@ for (const classification in productsByClassification) {
     <Accordion :active-index="0">
       <AccordionTab v-for="classification in Object.keys(productsByClassification)" :key="classification"
                     :header="classification">
-        <div v-for="product in productsByClassification[classification]" :key="product.name">
-          <SelectorItem @productSelected="$emit('productSelected', product.name)"
-                        @addConsumers="$emit('addConsumers', product.name)"
-                        @addSources="$emit('addSources', product.name)"
-                        :label="product.name"
-                        type="product" />
+        <div class="product-box">
+          <div @click="$emit('productSelected', product.name)"
+               class="selectable"
+               v-for="product in productsByClassification[classification]"
+               :key="product.name">
+            {{ product.name }}
+          </div>
         </div>
       </AccordionTab>
     </Accordion>
   </div>
 </template>
 
-<style>
+<style scoped>
 .node-selector {
   overflow: scroll;
   background: rgba(0, 0, 0, 0.2);
   flex: 1;
+}
+
+.product-box {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+}
+
+.selectable {
+  margin: 2px;
+  border: 1px solid #2c3e50;
+  background: rgba(0, 0, 130, 0.2);
+  color: #24a4cc;
+  font-size: 0.7rem;
+  width: fit-content;
 }
 </style>
