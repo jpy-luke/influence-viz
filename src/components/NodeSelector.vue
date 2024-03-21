@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import SelectorItem from '@/components/SelectorItem.vue'
 
 import Accordion from 'primevue/accordion'
 import AccordionTab from 'primevue/accordiontab'
 
 import { productMap, Product } from '@/graphing/model'
-import type { ProductionGraph } from '@/graphing/graph'
-
-//const props = defineProps<{ graphHandler: ProductionGraph }>()
 
 const productsByClassification = Array.from(productMap.values()).reduce(
   (acc, product) => {
@@ -46,7 +42,6 @@ for (const classification in productsByClassification) {
 
 <style scoped>
 .node-selector {
-  overflow: scroll;
   background: rgba(0, 0, 0, 0.2);
   flex: 1;
 }
@@ -55,14 +50,5 @@ for (const classification in productsByClassification) {
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
-}
-
-.selectable {
-  margin: 2px;
-  border: 1px solid #2c3e50;
-  background: rgba(0, 0, 130, 0.2);
-  color: #24a4cc;
-  font-size: 0.7rem;
-  width: fit-content;
 }
 </style>

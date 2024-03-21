@@ -3,17 +3,51 @@ import GraphDisplay from '../components/GraphDisplay.vue'
 import NodeSelector from '@/components/NodeSelector.vue'
 import GraphControls from '@/components/GraphControls.vue'
 import { ProductionGraph } from '@/graphing/graph'
+import { ref } from 'vue'
+import { processMap, productMap } from '@/graphing/model'
+import SelectedNodeControls from '@/components/SelectedNodeControls.vue'
 
 const graphHandler = new ProductionGraph()
+let selectedItem = ref(null)
+let selectableInputs = ref([])
+let selectableOutputs = ref([])
+let selectedIsProduct = true
+
+const itemSelected = (label: string) => {
+  selectedItem.value = label
+  selectedIsProduct = productMap.has(label)
+  if (selectedIsProduct) {
+    graphHandler.addProduct(label, 0, 0, true)
+    selectableInputs.value = Array.from(productMap.get(label).outputFrom).map((p) => p.name)
+    selectableOutputs.value = Array.from(productMap.get(label).inputFor).map((p) => p.name)
+  } else {
+    graphHandler.addProcess(label, 0, 0, true)
+    selectableInputs.value = Array.from(processMap.get(label).inputs.keys()).map((p) => p.name)
+    selectableOutputs.value = Array.from(processMap.get(label).outputs.keys()).map((p) => p.name)
+  }
+}
+
+const clearSelection = () => {
+  selectedItem.value = null
+  selectableInputs.value = []
+  selectableOutputs.value = []
+  if (selectedIsProduct) {
+    graphHandler.removeProduct(selectedItem.value)
+  } else {
+    graphHandler.removeProcess(selectedItem.value)
+  }
+}
+
 </script>
 
 <template>
   <div class="browser-controls">
     <GraphControls :graph-handler="graphHandler" />
-    <NodeSelector @productSelected="(label: string) => graphHandler.addProduct(label, 0, 0, true)"
-                  @addConsumers="(label: string) => graphHandler.addConsumersForProduct(label)"
-                  @addSources="(label: string) => graphHandler.addSourcesForProduct(label)"
+    <SelectedNodeControls :selectable-inputs="selectableInputs" :selectable-outputs="selectableOutputs"
+                          @expansionSelected="itemSelected" :selected-item="selectedItem"
+                          @clearSelection="clearSelection"
     />
+    <NodeSelector @productSelected="itemSelected" />
   </div>
   <GraphDisplay :graph="graphHandler.graph" />
 </template>
@@ -29,5 +63,6 @@ const graphHandler = new ProductionGraph()
   height: 100%;
   background: rgba(0, 0, 0, 0.2);
   z-index: 2;
+  overflow: scroll;
 }
 </style>

@@ -11,3 +11,12 @@ a,
   transition: 0.4s;
   padding: 3px;
 }
+
+.selectable {
+  margin: 2px;
+  border: 1px solid #2c3e50;
+  background: rgba(0, 0, 130, 0.2);
+  color: #24a4cc;
+  font-size: 0.7rem;
+  width: fit-content;
+}
