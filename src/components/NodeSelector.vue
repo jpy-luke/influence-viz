@@ -24,6 +24,7 @@ for (const classification in productsByClassification) {
 
 <template>
   <div class="node-selector">
+    <h4>Product selection</h4>
     <Accordion :active-index="0">
       <AccordionTab v-for="classification in Object.keys(productsByClassification)" :key="classification"
                     :header="classification">

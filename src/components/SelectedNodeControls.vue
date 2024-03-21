@@ -7,15 +7,16 @@ const props = defineProps<{ selectableInputs: string[], selectableOutputs: strin
 
 <template>
   <div :hidden="props.selectedItem == null">
-    <h4>{{ selectedItem }} <span @click="$emit('clearSelection')">X</span></h4>
+    <h4 :hidden="props.selectedItem == null">Selected item controls</h4>
+    <div>{{ selectedItem }} <span @click="$emit('clearSelection')">X</span></div>
     <Accordion :active-index="0">
-      <AccordionTab header="Inputs">
+      <AccordionTab v-if="props.selectableInputs.length > 0" header="Sources / Inputs">
         <div class="selectable" v-for="input in props.selectableInputs" :key="input"
              @click="$emit('expansionSelected', input)">
           {{ input }}
         </div>
       </AccordionTab>
-      <AccordionTab header="Outputs">
+      <AccordionTab v-if="props.selectableOutputs.length >0" header="Consumers / Outputs">
         <div class="selectable" v-for="output in props.selectableOutputs" :key="output"
              @click="$emit('expansionSelected', output)">
           {{ output }}

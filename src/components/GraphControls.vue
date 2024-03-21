@@ -18,10 +18,11 @@ const autoLayout = () => {
 </script>
 
 <template>
+  <h4>Graph controls</h4>
   <div class="graph-controls">
-    <button @click="resetGraph">Reset</button>
-    <button @click="totalGraph">Total</button>
-    <button @click="autoLayout">Auto layout</button>
+    <div class="selectable" @click="resetGraph">Reset</div>
+    <div class="selectable" @click="totalGraph">Total</div>
+    <div class="selectable" @click="autoLayout">Auto layout</div>
   </div>
 </template>
 
