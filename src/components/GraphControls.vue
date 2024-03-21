@@ -11,12 +11,17 @@ const totalGraph = () => {
   props.graphHandler.resetGraph()
   props.graphHandler.initializeTotalGraph()
 }
+
+const autoLayout = () => {
+  props.graphHandler.toggleForceLayout()
+}
 </script>
 
 <template>
   <div class="graph-controls">
     <button @click="resetGraph">Reset</button>
     <button @click="totalGraph">Total</button>
+    <button @click="autoLayout">Auto layout</button>
   </div>
 </template>
 
