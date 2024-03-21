@@ -57,13 +57,16 @@ const expandSelection = (label: string) => {
 <template>
   <div class="browser-controls">
     <GraphControls :graph-handler="graphHandler" />
+
+    <NodeSelector @productSelected="itemSelected" />
+  </div>
+  <GraphDisplay :graph="graphHandler.graph" :on-selected="itemSelected" />
+  <div class="browser-controls-right">
     <SelectedNodeControls :selectable-inputs="selectableInputs" :selectable-outputs="selectableOutputs"
                           @expansionSelected="expandSelection" :selected-item="selectedItem"
                           @clearSelection="clearSelection"
     />
-    <NodeSelector @productSelected="itemSelected" />
   </div>
-  <GraphDisplay :graph="graphHandler.graph" :on-selected="itemSelected"/>
 </template>
 
 <style scoped>
@@ -74,7 +77,20 @@ const expandSelection = (label: string) => {
   top: 10vh;
   left: 1rem;
   width: 300px;
-  height: 100%;
+  height: 80%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  overflow: scroll;
+}
+
+.browser-controls-right {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 10vh;
+  right: 1rem;
+  width: 300px;
+  height: 80%;
   background: rgba(0, 0, 0, 0.2);
   z-index: 2;
   overflow: scroll;
