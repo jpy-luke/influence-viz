@@ -7,9 +7,9 @@ import Sigma from 'sigma'
 import { onMounted } from 'vue'
 import type Graph from 'graphology'
 
-const props = defineProps<{graph: Graph}>()
-let draggedNode: string | null = null;
-let isDragging = false;
+const props = defineProps<{ graph: Graph, onSelected: Function }>()
+let draggedNode: string | null = null
+let isDragging = false
 
 onMounted(() => {
   const container = document.getElementById('sigma-container') as HTMLElement
@@ -19,29 +19,33 @@ onMounted(() => {
     { renderEdgeLabels: true, labelColor: { color: 'gray' } }
   )
 
-  renderer.on("downNode", (e) => {
-    isDragging = true;
-    draggedNode = e.node;
-    props.graph.setNodeAttribute(draggedNode, "highlighted", true);
-  });
+  renderer.on('downNode', (e) => {
+    isDragging = true
+    draggedNode = e.node
+    props.graph.setNodeAttribute(draggedNode, 'highlighted', true)
+  })
 
-  renderer.getMouseCaptor().on("mousemovebody", (e) => {
-    if (!isDragging || !draggedNode) return;
-    const pos = renderer.viewportToGraph(e);
-    props.graph.setNodeAttribute(draggedNode, "x", pos.x);
-    props.graph.setNodeAttribute(draggedNode, "y", pos.y);
-    e.preventSigmaDefault();
-    e.original.preventDefault();
-    e.original.stopPropagation();
-  });
+  renderer.getMouseCaptor().on('mousemovebody', (e) => {
+    if (!isDragging || !draggedNode) return
+    const pos = renderer.viewportToGraph(e)
+    props.graph.setNodeAttribute(draggedNode, 'x', pos.x)
+    props.graph.setNodeAttribute(draggedNode, 'y', pos.y)
+    e.preventSigmaDefault()
+    e.original.preventDefault()
+    e.original.stopPropagation()
+  })
 
-  renderer.getMouseCaptor().on("mouseup", () => {
+  renderer.getMouseCaptor().on('mouseup', () => {
     if (draggedNode) {
-      props.graph.removeNodeAttribute(draggedNode, "highlighted");
+      props.graph.removeNodeAttribute(draggedNode, 'highlighted')
     }
-    isDragging = false;
-    draggedNode = null;
-  });
+    isDragging = false
+    draggedNode = null
+  })
+
+  renderer.on('clickNode', (e) => {
+    props.onSelected(e.node)
+  })
 })
 </script>
 

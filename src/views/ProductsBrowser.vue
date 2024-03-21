@@ -63,7 +63,7 @@ const expandSelection = (label: string) => {
     />
     <NodeSelector @productSelected="itemSelected" />
   </div>
-  <GraphDisplay :graph="graphHandler.graph" />
+  <GraphDisplay :graph="graphHandler.graph" :on-selected="itemSelected"/>
 </template>
 
 <style scoped>
