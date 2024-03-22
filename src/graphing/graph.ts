@@ -1,6 +1,6 @@
 import DirectedGraph from 'graphology'
 import { Process, Product, productMap, processMap } from '@/graphing/model'
-import ForceSupervisor from 'graphology-layout-force/worker';
+import ForceSupervisor from 'graphology-layout-force/worker'
 import nooverlap from 'graphology-layout-noverlap'
 
 const renderHints: Map<string, { x: number, y: number, color: string }> = new Map()
@@ -14,9 +14,11 @@ const xSpacing = 20
 
 export class ProductionGraph {
   public graph: DirectedGraph = new DirectedGraph({ multi: true })
-  public layout = new ForceSupervisor(this.graph, { settings: { }})
+  public layout = new ForceSupervisor(this.graph, { settings: {} })
 
-  constructor() {}
+  constructor() {
+  }
+
   public resetGraph() {
     this.graph.clear()
     this.layout.stop()
@@ -25,18 +27,16 @@ export class ProductionGraph {
   public toggleForceLayout() {
     if (!this.layout.isRunning()) {
       this.layout.start()
-    }
-    else {
+    } else {
       this.layout.stop()
     }
   }
 
   public resolveOverlap() {
-    if(!this.layout.isRunning()) {
+    if (!this.layout.isRunning()) {
       nooverlap.assign(this.graph)
     }
   }
-
 
 
   public addProduct(product: string, x = 0, y = 0, triggerLayout = false) {
@@ -53,12 +53,14 @@ export class ProductionGraph {
 
         for (const process of newProduct.outputFrom) {
           if (this.graph.hasNode(process.name)) {
-            this.graph.addEdge(process.name, newProduct.name, { label: process.name, color: '#24a4cc' })
+            const weight = process.outputs.get(newProduct) / process.recipeTime
+            this.graph.addEdge(process.name, newProduct.name, { label: weight.toPrecision(2), color: '#24a4cc' })
           }
         }
         for (const process of newProduct.inputFor) {
           if (this.graph.hasNode(process.name)) {
-            this.graph.addEdge(newProduct.name, process.name, { label: process.name, color: '#107030' })
+            const weight = process.inputs.get(newProduct) / process.recipeTime
+            this.graph.addEdge(newProduct.name, process.name, { label: weight.toPrecision(2), color: '#107030' })
           }
         }
       }
@@ -76,13 +78,15 @@ export class ProductionGraph {
 
         for (const product of newProcess.inputs.keys()) {
           if (this.graph.hasNode(product.name)) {
-            this.graph.addEdge(product.name, newProcess.name, { label: newProcess.name, color: '#107030' })
+            const weight = newProcess.inputs.get(product) / newProcess.recipeTime
+            this.graph.addEdge(product.name, newProcess.name, { label: weight.toPrecision(2), color: '#107030' })
           }
         }
 
         for (const product of newProcess.outputs.keys()) {
           if (this.graph.hasNode(product.name)) {
-            this.graph.addEdge(newProcess.name, product.name, { label: newProcess.name, color: '#24a4cc' })
+            const weight = newProcess.outputs.get(product) / newProcess.recipeTime
+            this.graph.addEdge(newProcess.name, product.name, { label: weight.toPrecision(2), color: '#24a4cc' })
           }
         }
       }
@@ -103,7 +107,8 @@ export class ProductionGraph {
           this.addProcess(process.name, x + xSpacing, yStart)
           yStart += ySpacing
         }
-        this.graph.addEdge(targetProduct.name, process.name, { label: process.name, color: '#107030' })
+        const weight = process.inputs.get(targetProduct) / process.recipeTime
+        this.graph.addEdge(targetProduct.name, process.name, { label: weight.toPrecision(2), color: '#107030' })
       })
     }
   }
@@ -119,7 +124,8 @@ export class ProductionGraph {
           this.addProcess(process.name, x - xSpacing, yStart)
           yStart += ySpacing
         }
-        this.graph.addEdge(process.name, targetProduct.name, { label: process.name, color: '#24a4cc' })
+        const weight = process.outputs.get(targetProduct) / process.recipeTime
+        this.graph.addEdge(process.name, targetProduct.name, { label: weight.toPrecision(2), color: '#24a4cc' })
       })
     }
   }
@@ -134,7 +140,8 @@ export class ProductionGraph {
         if (!this.graph.hasNode(product.name)) {
           this.addProduct(product.name, x + 100, yStart + 100 * index)
         }
-        this.graph.addEdge(targetProcess.name, product.name, { label: targetProcess.name, color: '#24a4cc' })
+        const weight = targetProcess.outputs.get(product) / targetProcess.recipeTime
+        this.graph.addEdge(targetProcess.name, product.name, { label: weight.toPrecision(2), color: '#24a4cc' })
       })
     }
   }
@@ -151,7 +158,8 @@ export class ProductionGraph {
           this.addProduct(product.name, x - 100, ycounter)
           ycounter += ySpacing
         }
-        this.graph.addEdge(product.name, targetProcess.name, { label: targetProcess.name, color: '#107030' })
+        const weight = targetProcess.inputs.get(product) / targetProcess.recipeTime
+        this.graph.addEdge(product.name, targetProcess.name, { label: weight.toPrecision(2), color: '#107030' })
       })
     }
   }

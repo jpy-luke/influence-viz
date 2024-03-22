@@ -44,12 +44,16 @@ interface RawProcess {
 class Process {
   i: number
   name: string
+  setupTime: number
+  recipeTime: number
   inputs: Map<Product, number>
   outputs: Map<Product, number>
 
   constructor(rawProcess: RawProcess, products: Array<Product>) {
     this.i = rawProcess.i
     this.name = rawProcess.name
+    this.setupTime = rawProcess.setupTime
+    this.recipeTime = rawProcess.recipeTime
     this.inputs = new Map()
     this.outputs = new Map()
 
