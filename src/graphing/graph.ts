@@ -38,6 +38,22 @@ export class ProductionGraph {
     }
   }
 
+  public createEdgeLabel(amount: number, time: number) {
+    const rate = 24 * (amount / time) * 3600 / 1000
+    let result = ''
+    if (rate >= 100) {
+      result = Math.round(rate).toString()
+    } else if (rate / Math.floor(rate) > 1) {
+      result = rate.toFixed(2)
+    } else if (rate < 1) {
+      result = rate.toPrecision(3)
+    }
+    else {
+      result = rate.toString()
+    }
+
+    return `${result} t/h`
+  }
 
   public addProduct(product: string, x = 0, y = 0, triggerLayout = false) {
     const newProduct = productMap.get(product)
@@ -53,14 +69,14 @@ export class ProductionGraph {
 
         for (const process of newProduct.outputFrom) {
           if (this.graph.hasNode(process.name)) {
-            const weight = process.outputs.get(newProduct) / process.recipeTime
-            this.graph.addEdge(process.name, newProduct.name, { label: weight.toPrecision(2), color: '#24a4cc' })
+            const label = this.createEdgeLabel(process.outputs.get(newProduct), process.recipeTime)
+            this.graph.addEdge(process.name, newProduct.name, { label, color: '#24a4cc' })
           }
         }
         for (const process of newProduct.inputFor) {
           if (this.graph.hasNode(process.name)) {
-            const weight = process.inputs.get(newProduct) / process.recipeTime
-            this.graph.addEdge(newProduct.name, process.name, { label: weight.toPrecision(2), color: '#107030' })
+            const label = this.createEdgeLabel(process.inputs.get(newProduct), process.recipeTime)
+            this.graph.addEdge(newProduct.name, process.name, { label, color: '#107030' })
           }
         }
       }
@@ -78,15 +94,15 @@ export class ProductionGraph {
 
         for (const product of newProcess.inputs.keys()) {
           if (this.graph.hasNode(product.name)) {
-            const weight = newProcess.inputs.get(product) / newProcess.recipeTime
-            this.graph.addEdge(product.name, newProcess.name, { label: weight.toPrecision(2), color: '#107030' })
+            const label = this.createEdgeLabel(newProcess.inputs.get(product), newProcess.recipeTime)
+            this.graph.addEdge(product.name, newProcess.name, { label, color: '#107030' })
           }
         }
 
         for (const product of newProcess.outputs.keys()) {
           if (this.graph.hasNode(product.name)) {
-            const weight = newProcess.outputs.get(product) / newProcess.recipeTime
-            this.graph.addEdge(newProcess.name, product.name, { label: weight.toPrecision(2), color: '#24a4cc' })
+            const label = this.createEdgeLabel(newProcess.outputs.get(product), newProcess.recipeTime)
+            this.graph.addEdge(newProcess.name, product.name, { label: label, color: '#24a4cc' })
           }
         }
       }
@@ -107,8 +123,8 @@ export class ProductionGraph {
           this.addProcess(process.name, x + xSpacing, yStart)
           yStart += ySpacing
         }
-        const weight = process.inputs.get(targetProduct) / process.recipeTime
-        this.graph.addEdge(targetProduct.name, process.name, { label: weight.toPrecision(2), color: '#107030' })
+        const label = this.createEdgeLabel(process.inputs.get(targetProduct), process.recipeTime)
+        this.graph.addEdge(targetProduct.name, process.name, { label, color: '#107030' })
       })
     }
   }
@@ -124,8 +140,8 @@ export class ProductionGraph {
           this.addProcess(process.name, x - xSpacing, yStart)
           yStart += ySpacing
         }
-        const weight = process.outputs.get(targetProduct) / process.recipeTime
-        this.graph.addEdge(process.name, targetProduct.name, { label: weight.toPrecision(2), color: '#24a4cc' })
+        const label = this.createEdgeLabel(process.outputs.get(targetProduct), process.recipeTime)
+        this.graph.addEdge(process.name, targetProduct.name, { label, color: '#24a4cc' })
       })
     }
   }
@@ -140,8 +156,8 @@ export class ProductionGraph {
         if (!this.graph.hasNode(product.name)) {
           this.addProduct(product.name, x + 100, yStart + 100 * index)
         }
-        const weight = targetProcess.outputs.get(product) / targetProcess.recipeTime
-        this.graph.addEdge(targetProcess.name, product.name, { label: weight.toPrecision(2), color: '#24a4cc' })
+        const label = this.createEdgeLabel(targetProcess.outputs.get(product), targetProcess.recipeTime)
+        this.graph.addEdge(targetProcess.name, product.name, { label, color: '#24a4cc' })
       })
     }
   }
@@ -158,8 +174,8 @@ export class ProductionGraph {
           this.addProduct(product.name, x - 100, ycounter)
           ycounter += ySpacing
         }
-        const weight = targetProcess.inputs.get(product) / targetProcess.recipeTime
-        this.graph.addEdge(product.name, targetProcess.name, { label: weight.toPrecision(2), color: '#107030' })
+        const label = this.createEdgeLabel(targetProcess.inputs.get(product), targetProcess.recipeTime)
+        this.graph.addEdge(product.name, targetProcess.name, { label: label, color: '#107030' })
       })
     }
   }
