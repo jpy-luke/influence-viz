@@ -20,3 +20,8 @@ a,
   font-size: 0.7rem;
   width: fit-content;
 }
+
+*::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
