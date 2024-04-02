@@ -1,6 +1,4 @@
-import processSource from './process'
-import productSource from './product'
-import buildingSource from './building'
+import * as sdk from '@influenceth/sdk'
 
 interface RawProduct {
   i: number;
@@ -89,11 +87,11 @@ interface RawBuildingProduct {
 
 function createProducts(): Map<string, Product> {
   const retval = new Map()
-  Object.values(productSource.TYPES as { number: RawProduct })
+  Object.values(sdk.Product.TYPES as { number: RawProduct })
     .map((product) => new Product(product))
     .forEach((product) => retval.set(product.name, product))
   const maxProductIndex = Math.max(...Array.from(retval.values()).map((product) => product.i))
-  Object.values(buildingSource.TYPES as { number: RawBuildingProduct })
+  Object.values(sdk.Building.TYPES as { number: RawBuildingProduct })
     .filter((building) => building.i !== 0)
     .map((building) => {
       return new Product({
@@ -114,13 +112,13 @@ function createProducts(): Map<string, Product> {
 function createProcesses(productMap: Map<string, Product>): Map<string, Process> {
   const products = Array.from(productMap.values())
   const retval = new Map()
-  Object.values(processSource.TYPES as { number: RawProcess })
+  Object.values(sdk.Process.TYPES as { number: RawProcess })
     .map((process) => new Process(process, products))
     .forEach((process) => retval.set(process.name, process))
   const maxProcessIndex = Math.max(...Array.from(retval.values()).map((process) => process.i))
-  Object.entries(buildingSource.CONSTRUCTION_TYPES as { number: RawBuildingProcess })
+  Object.entries(sdk.Building.CONSTRUCTION_TYPES as { number: RawBuildingProcess })
     .map((building, i) => {
-      const outputProduct = buildingSource.TYPES[parseInt(building[0])]
+      const outputProduct = sdk.Building.TYPES[parseInt(building[0])]
       const proto = {
         i:  maxProcessIndex + i + 1,
         name: `${outputProduct.name} Construction`,

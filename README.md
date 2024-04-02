@@ -2,7 +2,9 @@
 
 This is a graph display based browser for production chains in the [Influence](https://influenceth.io) game. It is built
 using [Vue 3](https://vuejs.org/), utilizing the [Graphology](https://github.com/graphology/graphology) and
-[Sigma.js](https://github.com/jacomyal/sigma.js) libraries for graph display.
+[Sigma.js](https://github.com/jacomyal/sigma.js) libraries for graph display. Using
+the [Influence SDK](https://github.com/influenceth/sdk) as static
+game data source.
 
 Application can be found at https://influence-viz.threehappylads.fi.
 
