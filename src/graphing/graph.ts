@@ -122,9 +122,9 @@ export class ProductionGraph {
         if (!this.graph.hasNode(process.name)) {
           this.addProcess(process.name, x + xSpacing, yStart)
           yStart += ySpacing
+          const label = this.createEdgeLabel(process.inputs.get(targetProduct), process.recipeTime)
+          this.graph.addEdge(targetProduct.name, process.name, { label, color: '#107030' })
         }
-        const label = this.createEdgeLabel(process.inputs.get(targetProduct), process.recipeTime)
-        this.graph.addEdge(targetProduct.name, process.name, { label, color: '#107030' })
       })
     }
   }
@@ -139,9 +139,9 @@ export class ProductionGraph {
         if (!this.graph.hasNode(process.name)) {
           this.addProcess(process.name, x - xSpacing, yStart)
           yStart += ySpacing
+          const label = this.createEdgeLabel(process.outputs.get(targetProduct), process.recipeTime)
+          this.graph.addEdge(process.name, targetProduct.name, { label, color: '#24a4cc' })
         }
-        const label = this.createEdgeLabel(process.outputs.get(targetProduct), process.recipeTime)
-        this.graph.addEdge(process.name, targetProduct.name, { label, color: '#24a4cc' })
       })
     }
   }
@@ -151,13 +151,14 @@ export class ProductionGraph {
     if (targetProcess) {
       const { x, y } = this.graph.getNodeAttributes(targetProcess.name)
       const numProducts = targetProcess.outputs.size
-      const yStart = y - (100 * numProducts) / 2
+      let yStart = y - (100 * numProducts) / 2
       Array.from(targetProcess.outputs.keys()).forEach((product, index) => {
         if (!this.graph.hasNode(product.name)) {
           this.addProduct(product.name, x + 100, yStart + 100 * index)
+          yStart += ySpacing
+          const label = this.createEdgeLabel(targetProcess.outputs.get(product), targetProcess.recipeTime)
+          this.graph.addEdge(targetProcess.name, product.name, { label, color: '#24a4cc' })
         }
-        const label = this.createEdgeLabel(targetProcess.outputs.get(product), targetProcess.recipeTime)
-        this.graph.addEdge(targetProcess.name, product.name, { label, color: '#24a4cc' })
       })
     }
   }
@@ -167,15 +168,14 @@ export class ProductionGraph {
     if (targetProcess) {
       const { x, y } = this.graph.getNodeAttributes(targetProcess.name)
       const numProducts = targetProcess.inputs.size
-      const yStart = y - (ySpacing * numProducts) / 2
-      let ycounter = yStart
+      let yStart = y - (100 * numProducts) / 2
       Array.from(targetProcess.inputs.keys()).forEach((product, index) => {
         if (!this.graph.hasNode(product.name)) {
-          this.addProduct(product.name, x - 100, ycounter)
-          ycounter += ySpacing
+          this.addProduct(product.name, x - 100, yStart + 100 * index)
+          yStart += ySpacing
+          const label = this.createEdgeLabel(targetProcess.inputs.get(product), targetProcess.recipeTime)
+          this.graph.addEdge(product.name, targetProcess.name, { label: label, color: '#107030' })
         }
-        const label = this.createEdgeLabel(targetProcess.inputs.get(product), targetProcess.recipeTime)
-        this.graph.addEdge(product.name, targetProcess.name, { label: label, color: '#107030' })
       })
     }
   }
