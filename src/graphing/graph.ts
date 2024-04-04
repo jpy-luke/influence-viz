@@ -48,8 +48,7 @@ export class ProductionGraph {
       result = rate.toFixed(2)
     } else if (rate < 1) {
       result = rate.toPrecision(3)
-    }
-    else {
+    } else {
       result = rate.toString()
     }
 
@@ -185,40 +184,6 @@ export class ProductionGraph {
     if (this.graph.hasNode(name)) {
       this.graph.dropNode(name)
     }
-  }
-
-  public populateFromProduct(product: string, x = 0, y = 0) {
-    if (!this.graph.hasNode(product)) {
-      this.addProduct(product, x, y)
-      this.addConsumersForProduct(product)
-      for (const consumerProcess of productMap.get(product).inputFor) {
-        const { x, y } = this.graph.getNodeAttributes(consumerProcess.name)
-        for (const outputProduct of consumerProcess.outputs.keys()) {
-          this.populateFromProduct(outputProduct.name, x + 100, y)
-        }
-      }
-      this.addSourcesForProduct(product)
-      for (const sourceProcess of productMap.get(product).outputFrom) {
-        const { x, y } = this.graph.getNodeAttributes(sourceProcess.name)
-        for (const inputProduct of sourceProcess.inputs.keys()) {
-          this.populateFromProduct(inputProduct.name, x - 100, y)
-        }
-      }
-    }
-  }
-
-  public initializeTotalGraph() {
-    this.resetGraph()
-
-    const products: string[] = Array.from(productMap.values()).map((product) => product.name)
-    let ycounter = 0
-    products.forEach((product) => {
-      if (!this.graph.hasNode(product)) {
-        this.populateFromProduct(product, 0, ycounter)
-        ycounter += ySpacing
-      }
-    })
-    this.resolveOverlap()
   }
 }
 

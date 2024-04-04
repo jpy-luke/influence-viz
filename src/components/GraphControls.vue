@@ -3,11 +3,6 @@ import type { ProductionGraph } from '@/graphing/graph'
 
 const props = defineProps<{ graphHandler: ProductionGraph, onReset: (arg0: Event) => void }>()
 
-const totalGraph = () => {
-  props.graphHandler.resetGraph()
-  props.graphHandler.initializeTotalGraph()
-}
-
 const autoLayout = () => {
   props.graphHandler.toggleForceLayout()
 }
@@ -17,8 +12,7 @@ const autoLayout = () => {
   <h4>Graph controls</h4>
   <div class="graph-controls">
     <div class="selectable" @click="onReset">Reset</div>
-    <div class="selectable" @click="totalGraph">Total</div>
-    <div class="selectable" @click="autoLayout">Auto layout</div>
+    <div class="selectable" @click="autoLayout">Toggle auto layout</div>
   </div>
 </template>
 
