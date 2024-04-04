@@ -51,8 +51,8 @@ onMounted(() => {
 
 <style scoped>
 #sigma-container {
-  height: 90vh;
-  width: 95%;
+  height: 90%;
+  width: 100%;
   position: absolute;
   background-color: #181818;
   flex-grow: 1;
