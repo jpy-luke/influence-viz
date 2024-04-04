@@ -21,7 +21,3 @@ a,
   width: fit-content;
 }
 
-*::-webkit-scrollbar {
-    width: 0;
-    background: transparent;
-}

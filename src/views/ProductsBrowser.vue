@@ -89,6 +89,7 @@ const onReset = () => {
   background: rgba(0, 0, 0, 0.2);
   z-index: 2;
   overflow: scroll;
+  scrollbar-width: none;
 }
 
 .browser-controls-right {
@@ -101,6 +102,6 @@ const onReset = () => {
   height: 80%;
   background: rgba(0, 0, 0, 0.2);
   z-index: 2;
-  overflow: scroll;
+  scrollbar-width: none;
 }
 </style>
