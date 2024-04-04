@@ -22,7 +22,6 @@ export class ProductionGraph {
 
   public resetGraph() {
     this.graph.clear()
-    this.layout.stop()
   }
 
   public toggleForceLayout() {
