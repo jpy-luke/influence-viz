@@ -52,7 +52,7 @@ export class ProductionGraph {
       result = rate.toString()
     }
 
-    return `${result} t/h`
+    return `${amount} kg (${result} t/h)`
   }
 
   public addProduct(product: string, x = 0, y = 0, triggerLayout = false) {
