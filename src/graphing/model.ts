@@ -10,6 +10,11 @@ interface RawProduct {
   isAtomic: boolean;
 }
 
+const preferredSources = new Map([
+  ['Deionized Water', 'Water Vacuum-evaporation Desalination'],
+  ['Oxygen', 'Carbon Dioxide Ferrocatalysis']
+])
+
 class Product implements NodeLike {
   i: number
   category: string
@@ -53,7 +58,7 @@ class Product implements NodeLike {
     } else if (this.ins.length === 1) {
       retval = new Set([...this.ins[0].from.findSourceNames(), this.name])
     } else {
-      const bestSource = this.bestSource()
+      const bestSource = preferredSources.has(this.name) ? processMap.get(preferredSources.get(this.name)) : this.bestSource()
       retval = new Set([...bestSource.findSourceNames(), this.name])
     }
     this.visited = false
