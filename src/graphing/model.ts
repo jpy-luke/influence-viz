@@ -10,21 +10,21 @@ interface RawProduct {
   isAtomic: boolean;
 }
 
-class Product {
+class Product implements NodeLike {
   i: number
   category: string
   classification: string
   name: string
-  inputFor: Array<Process>
-  outputFrom: Array<Process>
+  outs: Array<EdgeLike>
+  ins: Array<EdgeLike>
 
   constructor(rawProduct: RawProduct) {
     this.i = rawProduct.i
     this.name = rawProduct.name
     this.classification = rawProduct.classification
     this.category = rawProduct.category
-    this.inputFor = []
-    this.outputFrom = []
+    this.outs = []
+    this.ins = []
   }
 }
 
@@ -40,35 +40,37 @@ interface RawProcess {
   outputs: { [key: number]: number }
 }
 
-class Process {
+class Process implements NodeLike {
   i: number
   name: string
   setupTime: number
   recipeTime: number
-  inputs: Map<Product, number>
-  outputs: Map<Product, number>
+  ins: Array<EdgeLike>
+  outs: Array<EdgeLike>
 
   constructor(rawProcess: RawProcess, products: Array<Product>) {
     this.i = rawProcess.i
     this.name = rawProcess.name
     this.setupTime = rawProcess.setupTime
     this.recipeTime = rawProcess.recipeTime
-    this.inputs = new Map()
-    this.outputs = new Map()
+    this.ins = []
+    this.outs = []
 
     for (const [productId, quantity] of Object.entries(rawProcess.inputs)) {
       const product = products.find((product) => product.i === parseInt(productId))
       if (product) {
-        this.inputs.set(product, quantity)
-        product.inputFor.push(this)
+        const edge = { from: product, to: this, weight: quantity }
+        this.ins.push(edge)
+        product.outs.push(edge)
       }
     }
 
     for (const [productId, quantity] of Object.entries(rawProcess.outputs)) {
       const product = products.find((product) => product.i === parseInt(productId))
       if (product) {
-        this.outputs.set(product, quantity)
-        product.outputFrom.push(this)
+        const edge = { from: this, to: product, weight: quantity }
+        this.outs.push(edge)
+        product.ins.push(edge)
       }
     }
   }
@@ -83,6 +85,18 @@ interface RawBuildingProduct {
   i: number;
   name: string;
   description: string;
+}
+
+interface NodeLike {
+  ins: Array<EdgeLike>
+  outs: Array<EdgeLike>
+  name: string
+}
+
+interface EdgeLike {
+  from: NodeLike
+  to: NodeLike
+  weight: number
 }
 
 function createProducts(): Map<string, Product> {
@@ -120,7 +134,7 @@ function createProcesses(productMap: Map<string, Product>): Map<string, Process>
     .map((building, i) => {
       const outputProduct = sdk.Building.TYPES[parseInt(building[0])]
       const proto = {
-        i:  maxProcessIndex + i + 1,
+        i: maxProcessIndex + i + 1,
         name: `${outputProduct.name} Construction`,
         setupTime: 0,
         processorType: 6,
@@ -130,13 +144,13 @@ function createProcesses(productMap: Map<string, Product>): Map<string, Process>
         batched: false
       }
       for (const [productId, quantity] of Object.entries(building[1].requirements)) {
-        proto.inputs = {...proto.inputs, [productId]: quantity}
+        proto.inputs = { ...proto.inputs, [productId]: quantity }
       }
       const targetProduct = productMap.get(outputProduct.name)
-      proto.outputs = {[targetProduct.i]: 1}
+      proto.outputs = { [targetProduct.i]: 1 }
       return new Process(proto, products)
     })
-  .forEach((process) => retval.set(process.name, process))
+    .forEach((process) => retval.set(process.name, process))
   return retval
 }
 

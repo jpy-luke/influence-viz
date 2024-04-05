@@ -15,9 +15,9 @@ describe('model management', () => {
 
   it(('converts process inputs and outputs'), () => {
     const processes = Array.from(processMap.values())
-      for (const process of processes.filter((process) => process.i < 243)) {
-      expect(process.inputs.size).toBe(Object.keys(sdk.Process.TYPES[process.i].inputs).length)
-      expect(process.outputs.size).toBe(Object.keys(sdk.Process.TYPES[process.i].outputs).length)
+    for (const process of processes.filter((process) => process.i < 243)) {
+      expect(process.ins.length).toBe(Object.keys(sdk.Process.TYPES[process.i].inputs).length)
+      expect(process.outs.length).toBe(Object.keys(sdk.Process.TYPES[process.i].outputs).length)
     }
   })
 })

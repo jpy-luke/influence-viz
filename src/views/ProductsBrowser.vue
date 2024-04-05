@@ -21,12 +21,12 @@ const itemSelected = (label: string) => {
   selectedIsProduct = productMap.has(label)
   if (selectedIsProduct) {
     graphHandler.addProduct(label, randomInt(-10, 10), randomInt(-10, 10), true)
-    selectableInputs.value = Array.from(productMap.get(label).outputFrom).map((p) => p.name)
-    selectableOutputs.value = Array.from(productMap.get(label).inputFor).map((p) => p.name)
+    selectableInputs.value = Array.from(productMap.get(label).ins).map((p) => p.from.name)
+    selectableOutputs.value = Array.from(productMap.get(label).outs).map((p) => p.to.name)
   } else {
     graphHandler.addProcess(label, randomInt(-10, 10), randomInt(-10, 10), true)
-    selectableInputs.value = Array.from(processMap.get(label).inputs.keys()).map((p) => p.name)
-    selectableOutputs.value = Array.from(processMap.get(label).outputs.keys()).map((p) => p.name)
+    selectableInputs.value = Array.from(processMap.get(label).ins).map((p) => p.from.name)
+    selectableOutputs.value = Array.from(processMap.get(label).outs).map((p) => p.to.name)
   }
 }
 
