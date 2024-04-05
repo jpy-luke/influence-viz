@@ -20,4 +20,22 @@ describe('model management', () => {
       expect(process.outs.length).toBe(Object.keys(sdk.Process.TYPES[process.i].outputs).length)
     }
   })
+
+  it('finds sources for cement', () => {
+    const cement = productMap.get('Cement')
+    if (cement) {
+      const sources = cement.findSourceNames()
+      const expectedSources = [
+        'Cement',
+        'Quicklime',
+        'Water',
+        'Calcite',
+        'Calcite Calcination',
+        'Salty Cement Mixing']
+
+      for (const source of expectedSources) {
+        expect(sources.has(source)).toBe(true)
+      }
+    }
+  })
 })

@@ -60,6 +60,14 @@ const onReset = () => {
   selectedItem.value = null
 }
 
+const findSources = () => {
+  const node = selectedIsProduct ? productMap.get(selectedItem.value) : processMap.get(selectedItem.value)
+  const sources = node.findSourceNames()
+  for (const source of sources) {
+    graphHandler.addNode(source, randomInt(-10, 10), randomInt(-10, 10), true)
+  }
+}
+
 </script>
 
 <template>
@@ -72,7 +80,7 @@ const onReset = () => {
   <div class="browser-controls-right">
     <SelectedNodeControls :selectable-inputs="selectableInputs" :selectable-outputs="selectableOutputs"
                           @expansionSelected="expandSelection" :selected-item="selectedItem"
-                          @clearSelection="clearSelection"
+                          @clearSelection="clearSelection" @findSources="findSources"
     />
   </div>
 </template>

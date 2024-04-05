@@ -186,6 +186,15 @@ export class ProductionGraph {
       this.graph.dropNode(name)
     }
   }
+
+  public addNode(name: string, x: number = 0, y: number = 0, triggerLayout = false) {
+    if (productMap.has(name)) {
+      this.addProduct(name, x, y, triggerLayout)
+    }
+    if (processMap.has(name)) {
+      this.addProcess(name, x, y, triggerLayout)
+    }
+  }
 }
 
 export default { ProductionGraph }

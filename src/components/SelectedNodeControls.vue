@@ -8,8 +8,9 @@ const props = defineProps<{ selectableInputs: string[], selectableOutputs: strin
 <template>
   <div v-if="props.selectedItem != null">
     <h4>Selected item controls</h4>
-    <div>{{ selectedItem }} </div>
+    <div>{{ selectedItem }}</div>
     <div class="selectable" @click="$emit('clearSelection')">Remove</div>
+    <div class="selectable" @click="$emit('findSources')">Find sources</div>
     <Accordion :active-index="0">
       <AccordionTab v-if="props.selectableInputs.length > 0" header="Sources / Inputs">
         <div class="selectable" v-for="input in props.selectableInputs" :key="input"
