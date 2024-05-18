@@ -10,6 +10,7 @@ renderHints.set('Manufactured Good', { x: 200, y: 0, color: '#846c1f' })
 renderHints.set('Crop', { x: 500, y: -300, color: '#ca5706' })
 renderHints.set('Assembly', { x: 600, y: 0, color: '#8f24d7' })
 renderHints.set('Building', { x: 600, y: 0, color: '#dcd0e5' })
+renderHints.set('Ship', { x: 600, y: 0, color: '#ffffff' })
 const ySpacing = 50
 const xSpacing = 20
 

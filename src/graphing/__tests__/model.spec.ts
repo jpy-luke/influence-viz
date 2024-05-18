@@ -5,7 +5,11 @@ import * as sdk from '@influenceth/sdk'
 describe('model management', () => {
   it('converts products', () => {
     const products = Array.from(createProducts().values())
-    expect(products.length).toBe(Object.keys(sdk.Product.TYPES).length + Object.keys(sdk.Building.CONSTRUCTION_TYPES).length)
+    expect(products.length).toBe(
+      Object.keys(sdk.Product.TYPES).length +
+      Object.keys(sdk.Building.CONSTRUCTION_TYPES).length +
+      Object.keys(sdk.Ship.TYPES).length - 1
+    )
   })
 
   it('converts processes', () => {

@@ -3,6 +3,7 @@ import * as sdk from '@influenceth/sdk'
 type RawProduct = typeof sdk.Product.TYPES[0]
 type RawProcess = typeof sdk.Process.TYPES[0]
 type RawBuilding = typeof sdk.Building.TYPES[0]
+type RawShip = typeof sdk.Ship.TYPES[0]
 
 const preferredSources = new Map([
   ['Deionized Water', 'Water Vacuum-evaporation Desalination'],
@@ -115,6 +116,16 @@ class Process implements NodeLike {
         building.ins.push(edge)
       }
     }
+
+    if (rawProcess.processorType == sdk.Processor.IDS.DRY_DOCK) {
+      const shipName = rawProcess.name.replace(' Integration', '')
+      const ship = products.find((product) => product.name === shipName)
+      if (ship) {
+        const edge = { from: this, to: ship, weight: 1 }
+        this.outs.push(edge)
+        ship.ins.push(edge)
+      }
+    }
   }
 
   findSourceNames(): Set<string> {
@@ -152,7 +163,7 @@ function createProducts(): Map<string, Product> {
   Object.values(sdk.Product.TYPES)
     .map((product) => new Product(product))
     .forEach((product) => retval.set(product.name, product))
-  const maxProductIndex = Math.max(...Array.from(retval.values()).map((product) => product.i))
+  let maxProductIndex = Math.max(...Array.from(retval.values()).map((product) => product.i))
   Object.values(sdk.Building.TYPES)
     .filter((building) => building.i !== 0)
     .map((building) => {
@@ -161,6 +172,21 @@ function createProducts(): Map<string, Product> {
         name: building.name,
         classification: 'Building',
         category: 'Building',
+        massPerUnit: 0,
+        volumePerUnit: 0,
+        isAtomic: true
+      })
+    })
+    .forEach((product) => retval.set(product.name, product))
+  maxProductIndex = Math.max(...Array.from(retval.values()).map((product) => product.i))
+  Object.values(sdk.Ship.TYPES)
+    .filter((ship) => ship.i !== 1)
+    .map((ship) => {
+      return new Product({
+        i: maxProductIndex + ship.i,
+        name: ship.name,
+        classification: 'Ship',
+        category: 'Ship',
         massPerUnit: 0,
         volumePerUnit: 0,
         isAtomic: true
