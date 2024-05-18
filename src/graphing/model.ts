@@ -12,7 +12,13 @@ interface RawProduct {
 
 const preferredSources = new Map([
   ['Deionized Water', 'Water Vacuum-evaporation Desalination'],
-  ['Oxygen', 'Carbon Dioxide Ferrocatalysis']
+  ['Calcium', 'Calcium Chloride Molten Salt Electrolysis'],
+  ['Calcium Chloride', 'Salt Selective Crystallization'],
+  ['Sodium Chloride', 'Salt Selective Crystallization'],
+  ['Chlorine', 'Sodium Chloralkali Process'],
+  ['Hydrochloric Acid', 'Hydrochloric Redox'],
+  ['Hydrofluoric Acid', 'Apatite Acid Extraction'],
+  ['Oxygen', 'Water Electrolysis']
 ])
 
 class Product implements NodeLike {
