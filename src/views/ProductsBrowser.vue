@@ -4,7 +4,6 @@ import NodeSelector from '@/components/NodeSelector.vue'
 import GraphControls from '@/components/GraphControls.vue'
 import { ProductionGraph } from '@/graphing/graph'
 import { ref } from 'vue'
-import { processMap, productMap } from '@/graphing/model'
 import SelectedNodeControls from '@/components/SelectedNodeControls.vue'
 
 const graphHandler = new ProductionGraph()
@@ -18,15 +17,15 @@ const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max 
 
 const itemSelected = (label: string) => {
   selectedItem.value = label
-  selectedIsProduct = productMap.has(label)
+  selectedIsProduct = graphHandler.products.has(label)
   if (selectedIsProduct) {
     graphHandler.addProduct(label, randomInt(-10, 10), randomInt(-10, 10), true)
-    selectableInputs.value = Array.from(productMap.get(label).ins).map((p) => p.from.name)
-    selectableOutputs.value = Array.from(productMap.get(label).outs).map((p) => p.to.name)
+    selectableInputs.value = Array.from(graphHandler.products.get(label).ins).map((p) => p.from.name)
+    selectableOutputs.value = Array.from(graphHandler.products.get(label).outs).map((p) => p.to.name)
   } else {
     graphHandler.addProcess(label, randomInt(-10, 10), randomInt(-10, 10), true)
-    selectableInputs.value = Array.from(processMap.get(label).ins).map((p) => p.from.name)
-    selectableOutputs.value = Array.from(processMap.get(label).outs).map((p) => p.to.name)
+    selectableInputs.value = Array.from(graphHandler.processes.get(label).ins).map((p) => p.from.name)
+    selectableOutputs.value = Array.from(graphHandler.processes.get(label).outs).map((p) => p.to.name)
   }
 }
 
@@ -61,7 +60,7 @@ const onReset = () => {
 }
 
 const findSources = () => {
-  const node = selectedIsProduct ? productMap.get(selectedItem.value) : processMap.get(selectedItem.value)
+  const node = selectedIsProduct ? graphHandler.products.get(selectedItem.value) : graphHandler.processes.get(selectedItem.value)
   const sources = node.findSourceNames()
   for (const source of sources) {
     graphHandler.addNode(source, randomInt(-10, 10), randomInt(-10, 10), true)

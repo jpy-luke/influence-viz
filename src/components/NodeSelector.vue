@@ -3,9 +3,9 @@
 import Accordion from 'primevue/accordion'
 import AccordionTab from 'primevue/accordiontab'
 
-import { productMap, Product } from '@/graphing/model'
+import { createProducts, Product } from '@/graphing/model'
 
-const productsByClassification = Array.from(productMap.values()).reduce(
+const productsByClassification = Array.from(createProducts().values()).reduce(
   (acc, product) => {
     if (!acc[product.classification]) {
       acc[product.classification] = []

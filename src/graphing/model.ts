@@ -58,7 +58,11 @@ class Product implements NodeLike {
     } else if (this.ins.length === 1) {
       retval = new Set([...this.ins[0].from.findSourceNames(), this.name])
     } else {
-      const bestSource = preferredSources.has(this.name) ? processMap.get(preferredSources.get(this.name)) : this.bestSource()
+      const bestSource = preferredSources.has(this.name)
+        ? this.ins.find(
+          (edge) => edge.from.name == preferredSources.get(this.name)
+        ).from as Process
+        : this.bestSource()
       retval = new Set([...bestSource.findSourceNames(), this.name])
     }
     this.visited = false
@@ -211,7 +215,4 @@ function createProcesses(productMap: Map<string, Product>): Map<string, Process>
   return retval
 }
 
-const productMap = createProducts()
-const processMap = createProcesses(productMap)
-
-export { Product, Process, productMap, processMap }
+export { Product, Process, createProducts, createProcesses }

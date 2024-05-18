@@ -1,5 +1,5 @@
 import DirectedGraph from 'graphology'
-import { Process, Product, productMap, processMap } from '@/graphing/model'
+import { Process, Product, createProducts, createProcesses } from '@/graphing/model'
 import ForceSupervisor from 'graphology-layout-force/worker'
 import nooverlap from 'graphology-layout-noverlap'
 
@@ -16,8 +16,12 @@ const xSpacing = 20
 export class ProductionGraph {
   public graph: DirectedGraph = new DirectedGraph({ multi: true })
   public layout = new ForceSupervisor(this.graph, { settings: {} })
+  public products: Map<string, Product>
+  public processes: Map<string, Process>
 
   constructor() {
+    this.products = createProducts()
+    this.processes = createProcesses(this.products)
   }
 
   public resetGraph() {
@@ -55,7 +59,7 @@ export class ProductionGraph {
   }
 
   public addProduct(product: string, x = 0, y = 0, triggerLayout = false) {
-    const newProduct = productMap.get(product)
+    const newProduct = this.products.get(product)
     if (newProduct) {
       if (!this.graph.hasNode(newProduct.name)) {
         this.graph.addNode(newProduct.name, {
@@ -88,7 +92,7 @@ export class ProductionGraph {
   }
 
   public addProcess(process: string, x = 0, y = 0, triggerLayout = false) {
-    const newProcess = processMap.get(process)
+    const newProcess = this.processes.get(process)
     if (newProcess) {
       if (!this.graph.hasNode(newProcess.name)) {
         this.graph.addNode(newProcess.name, { x: x, y: y, size: 6, label: newProcess.name, color: '#2020dd' })
@@ -114,7 +118,7 @@ export class ProductionGraph {
   }
 
   public addConsumersForProduct(product: string) {
-    const targetProduct = productMap.get(product)
+    const targetProduct = this.products.get(product)
     if (targetProduct) {
       const { x, y } = this.graph.getNodeAttributes(targetProduct.name)
       const numProcesses = targetProduct.outs.length
@@ -123,7 +127,7 @@ export class ProductionGraph {
         if (!this.graph.hasNode(edge.to.name)) {
           this.addProcess(edge.to.name, x + xSpacing, yStart)
           yStart += ySpacing
-          const label = this.createEdgeLabel(edge.weight, processMap.get(edge.to.name).recipeTime)
+          const label = this.createEdgeLabel(edge.weight, this.processes.get(edge.to.name).recipeTime)
           this.graph.addEdge(edge.from.name, edge.to.name, { label, color: '#107030' })
         }
       })
@@ -131,7 +135,7 @@ export class ProductionGraph {
   }
 
   public addSourcesForProduct(product: string) {
-    const targetProduct = productMap.get(product)
+    const targetProduct = this.products.get(product)
     if (targetProduct) {
       const { x, y } = this.graph.getNodeAttributes(targetProduct.name)
       const numProcesses = targetProduct.ins.length
@@ -140,7 +144,7 @@ export class ProductionGraph {
         if (!this.graph.hasNode(edge.from.name)) {
           this.addProcess(edge.from.name, x - xSpacing, yStart)
           yStart += ySpacing
-          const label = this.createEdgeLabel(edge.weight, processMap.get(edge.from.name).recipeTime)
+          const label = this.createEdgeLabel(edge.weight, this.processes.get(edge.from.name).recipeTime)
           this.graph.addEdge(edge.from.name, edge.to.name, { label, color: '#24a4cc' })
         }
       })
@@ -148,7 +152,7 @@ export class ProductionGraph {
   }
 
   public addOutputsForProcess(process: string) {
-    const targetProcess = processMap.get(process)
+    const targetProcess = this.processes.get(process)
     if (targetProcess) {
       const { x, y } = this.graph.getNodeAttributes(targetProcess.name)
       const numProducts = targetProcess.outs.length
@@ -165,7 +169,7 @@ export class ProductionGraph {
   }
 
   public addInputsForProcess(process: string) {
-    const targetProcess = processMap.get(process)
+    const targetProcess = this.processes.get(process)
     if (targetProcess) {
       const { x, y } = this.graph.getNodeAttributes(targetProcess.name)
       const numProducts = targetProcess.ins.length
@@ -188,10 +192,10 @@ export class ProductionGraph {
   }
 
   public addNode(name: string, x: number = 0, y: number = 0, triggerLayout = false) {
-    if (productMap.has(name)) {
+    if (this.products.has(name)) {
       this.addProduct(name, x, y, triggerLayout)
     }
-    if (processMap.has(name)) {
+    if (this.processes.has(name)) {
       this.addProcess(name, x, y, triggerLayout)
     }
   }
