@@ -2,6 +2,7 @@ import * as sdk from '@influenceth/sdk'
 
 type RawProduct = typeof sdk.Product.TYPES[0]
 type RawProcess = typeof sdk.Process.TYPES[0]
+type RawBuilding = typeof sdk.Building.TYPES[0]
 
 const preferredSources = new Map([
   ['Deionized Water', 'Water Vacuum-evaporation Desalination'],
@@ -104,6 +105,16 @@ class Process implements NodeLike {
         product.ins.push(edge)
       }
     }
+
+    if (rawProcess.processorType == sdk.Processor.IDS.CONSTRUCTION) {
+      const buildingName = rawProcess.name.replace(' Construction', '')
+      const building = products.find((product) => product.name === buildingName)
+      if (building) {
+        const edge = { from: this, to: building, weight: 1 }
+        this.outs.push(edge)
+        building.ins.push(edge)
+      }
+    }
   }
 
   findSourceNames(): Set<string> {
@@ -141,6 +152,22 @@ function createProducts(): Map<string, Product> {
   Object.values(sdk.Product.TYPES)
     .map((product) => new Product(product))
     .forEach((product) => retval.set(product.name, product))
+  const maxProductIndex = Math.max(...Array.from(retval.values()).map((product) => product.i))
+  Object.values(sdk.Building.TYPES)
+    .filter((building) => building.i !== 0)
+    .map((building) => {
+      return new Product({
+        i: maxProductIndex + building.i,
+        name: building.name,
+        classification: 'Building',
+        category: 'Building',
+        massPerUnit: 0,
+        volumePerUnit: 0,
+        isAtomic: true
+      })
+    })
+    .forEach((product) => retval.set(product.name, product))
+
   return retval
 }
 
