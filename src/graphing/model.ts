@@ -1,14 +1,7 @@
 import * as sdk from '@influenceth/sdk'
 
-interface RawProduct {
-  i: number;
-  name: string;
-  classification: string;
-  category: string;
-  massPerUnit: number;
-  volumePerUnit: number;
-  isAtomic: boolean;
-}
+type RawProduct = typeof sdk.Product.TYPES[0]
+type RawProcess = typeof sdk.Process.TYPES[0]
 
 const preferredSources = new Map([
   ['Deionized Water', 'Water Vacuum-evaporation Desalination'],
@@ -74,18 +67,6 @@ class Product implements NodeLike {
     this.visited = false
     return retval
   }
-}
-
-
-interface RawProcess {
-  i: number;
-  name: string;
-  processorType: number;
-  setupTime: number;
-  recipeTime: number;
-  batched: boolean;
-  inputs: { [key: number]: number };
-  outputs: { [key: number]: number }
 }
 
 class Process implements NodeLike {
@@ -157,7 +138,7 @@ interface EdgeLike {
 
 function createProducts(): Map<string, Product> {
   const retval = new Map()
-  Object.values(sdk.Product.TYPES as { number: RawProduct })
+  Object.values(sdk.Product.TYPES)
     .map((product) => new Product(product))
     .forEach((product) => retval.set(product.name, product))
   return retval
@@ -166,7 +147,7 @@ function createProducts(): Map<string, Product> {
 function createProcesses(productMap: Map<string, Product>): Map<string, Process> {
   const products = Array.from(productMap.values())
   const retval = new Map()
-  Object.values(sdk.Process.TYPES as { number: RawProcess })
+  Object.values(sdk.Process.TYPES)
     .map((process) => new Process(process, products))
     .forEach((process) => retval.set(process.name, process))
   return retval
