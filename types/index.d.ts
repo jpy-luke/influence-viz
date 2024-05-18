@@ -29,12 +29,12 @@ declare module '@influenceth/sdk' {
     getTrueAnomalyAtPos(pos: any): any;
   }
 
-  namespace address {
+  export namespace Address {
     export { toStandard }
     export { areEqual }
     export { getChain }
   }
-  namespace assets {
+  declare namespace assets {
     const Building: {
       [x: number]: {
         iconVersion: number;
@@ -95,18 +95,18 @@ declare module '@influenceth/sdk' {
     export { Component$3 as Component }
   }
   export namespace Building {
-    export { TYPES$d as TYPES }
+    export { TYPES$c as TYPES }
     export { CONSTRUCTION_TYPES$1 as CONSTRUCTION_TYPES }
     export { CONSTRUCTION_STATUSES }
     export { CONSTRUCTION_STATUS_LABELS }
     export { DECONSTRUCTION_PENALTY }
     export { GRACE_PERIOD }
-    export { IDS$d as IDS }
+    export { IDS$b as IDS }
     export { getConstructionTime }
     export { getConstructionType$1 as getConstructionType }
-    export { getType$9 as getType }
+    export { getType$8 as getType }
   }
-  namespace crew {
+  declare namespace crew {
     export { CREWMATE_STACKING_BONUS_EFFICIENCY }
     export { CREWMATE_FOOD_PER_YEAR }
     export { STARVING_MULTIPLIER }
@@ -155,50 +155,49 @@ declare module '@influenceth/sdk' {
     export { Entity$3 as Entity }
     export { Component$2 as Component }
   }
-  namespace delivery {
-    export { STATUSES$5 as STATUSES }
+  declare namespace delivery {
+    export { STATUSES$4 as STATUSES }
   }
-  namespace deposit {
+  declare namespace deposit {
     export { MAX_YIELD }
     export { SAMPLE_TIME }
-    export { STATUSES$4 as STATUSES }
+    export { STATUSES$3 as STATUSES }
     export { getSampleBounds }
     export { getSampleTime }
   }
-  namespace dock {
-    export { IDS$9 as IDS }
-    export { TYPES$9 as TYPES }
-    export { getType$5 as getType }
+  declare namespace dock {
+    export { IDS$7 as IDS }
+    export { TYPES$8 as TYPES }
+    export { getType$4 as getType }
     export { getGroundDelay }
     export { Entity$1 as Entity }
     export { Component }
   }
-  namespace dryDock {
-    export { IDS$8 as IDS }
-    export { STATUSES$3 as STATUSES }
-    export { TYPES$8 as TYPES }
-    export { getType$4 as getType }
+  declare namespace dryDock {
+    export { IDS$6 as IDS }
+    export { STATUSES$2 as STATUSES }
+    export { TYPES$7 as TYPES }
+    export { getType$3 as getType }
   }
   export namespace Entity {
     export { getPolicyDetails }
     export { getPrepaidPolicyRate }
   }
-  namespace exchange {
-    export { IDS$6 as IDS }
-    export { TYPES$6 as TYPES }
-    export { getType$3 as getType }
-  }
-  namespace extractor {
-    export { EXTRACTION_SETUP_TIME }
-    export { MAX_EXTRACTION_TIME }
-    export { MAX_YIELD_PER_RUN }
-    export { STATUSES$2 as STATUSES }
-    export { IDS$5 as IDS }
+  declare namespace exchange {
+    export { IDS$4 as IDS }
     export { TYPES$5 as TYPES }
-    export { getExtractionTime }
     export { getType$2 as getType }
   }
-  namespace fixed {
+  declare namespace extractor {
+    export { MAX_EXTRACTION_TIME }
+    export { MAX_YIELD_PER_RUN }
+    export { STATUSES$1 as STATUSES }
+    export { IDS$3 as IDS }
+    export { TYPES$4 as TYPES }
+    export { getExtractionTime }
+    export { getType$1 as getType }
+  }
+  declare namespace fixed {
     export { Fixed64ONE }
     export { realToFixed64 }
     export { fixed64ToReal }
@@ -209,12 +208,12 @@ declare module '@influenceth/sdk' {
   export const GM_ADALIA: number
   export namespace Inventory {
     export { CATEGORIES }
-    export { IDS$c as IDS }
-    export { STATUSES$7 as STATUSES }
-    export { TYPES$c as TYPES }
+    export { IDS$a as IDS }
+    export { STATUSES$6 as STATUSES }
+    export { TYPES$b as TYPES }
     export { getContents }
     export { getFilledCapacity }
-    export { getType$8 as getType }
+    export { getType$7 as getType }
   }
   export namespace Lot {
     export { toId }
@@ -222,8 +221,8 @@ declare module '@influenceth/sdk' {
     export { toPosition }
   }
 
-  class MerkleTree {
-    static sortedHash(a: any, b: any): string;
+  declare class MerkleTree {
+    static sortedHash(a: any, b: any): any;
 
     static generateRoot(values: any): any;
 
@@ -236,26 +235,26 @@ declare module '@influenceth/sdk' {
     static verify(leaf: any, root: any, proof: any): boolean;
   }
 
-  namespace name {
-    export { TYPES$4 as TYPES }
+  declare namespace name {
+    export { TYPES$3 as TYPES }
     export { getNameError }
-    export { getType$1 as getType }
+    export { getType }
     export { getTypeRegex }
     export { isNameValid }
   }
-  namespace order {
+  declare namespace order {
     export { FEE_SCALE }
-    export { IDS$4 as IDS }
-    export { STATUSES$1 as STATUSES }
+    export { IDS$2 as IDS }
+    export { STATUSES }
     export { getBuyOrderDeposit }
     export { getFillBuyOrderWithdrawals }
     export { getFillSellOrderPayments }
     export { adjustedFee }
     export { netEffFeeBonus }
   }
-  namespace permission {
-    export { IDS$3 as IDS }
-    export { TYPES$3 as TYPES }
+  declare namespace permission {
+    export { IDS$1 as IDS }
+    export { TYPES$2 as TYPES }
     export { POLICY_IDS }
     export { POLICY_TYPES }
     export { MAX_POLICY_DURATION }
@@ -265,7 +264,7 @@ declare module '@influenceth/sdk' {
     export { isPermitted }
     export { Entity }
   }
-  const planet: Readonly<{
+  declare const planet: Readonly<{
     __proto__: any;
     TYPES: {
       ROCKY: number;
@@ -298,21 +297,22 @@ declare module '@influenceth/sdk' {
     })[];
   }>
   export namespace Process {
-    export { IDS$1 as IDS }
-    export { TYPES$1 as TYPES }
+    export { IDS$c as IDS }
+    export { TYPES$d as TYPES }
     export { getListByProcessorType }
+    export { getOutputs }
     export { getProcessingTime }
     export { getSetupTime }
-    export { getType }
+    export { getType$9 as getType }
   }
   export namespace Processor {
-    export { IDS$2 as IDS }
-    export { STATUSES }
+    export { IDS$e as IDS }
+    export { STATUSES$7 as STATUSES }
   }
   export namespace Product {
     export { CATEGORIES$1 as CATEGORIES }
     export { CLASSIFICATIONS }
-    export { IDS$e as IDS }
+    export { IDS$d as IDS }
     export { TYPES$e as TYPES }
     export { getListByCategory }
     export { getListByClassification }
@@ -347,43 +347,53 @@ declare module '@influenceth/sdk' {
     };
   }
 
-  namespace randomEvent {
+  declare namespace randomEvent {
     export { MIN_ROUNDS }
     export { IDS }
     export { TYPES }
     export { ACTION_IDS }
     export { ACTION_TYPES }
   }
-  export const SIMPLEX_POLY_FIT: any
+  export const SIMPLEX_POLY_FIT: {
+    1: number[];
+    2: number[];
+    3: number[];
+    4: number[];
+    5: number[];
+    6: number[];
+    7: number[];
+    8: number[];
+  }
   export namespace Ship {
     export { CONSTRUCTION_TYPES }
     export { EMERGENCY_PROP_GEN_TIME }
-    export { IDS$b as IDS }
-    export { STATUSES$6 as STATUSES }
-    export { TYPES$b as TYPES }
+    export { IDS$9 as IDS }
+    export { STATUSES$5 as STATUSES }
+    export { TYPES$a as TYPES }
     export { getConstructionType }
     export { getEmergencyPropellantAmount }
     export { getPropellantRequirement }
     export { getTimeUntilEmergencyPropellantFull }
-    export { getType$7 as getType }
+    export { getType$6 as getType }
     export { getVariant }
     export { propellantToDeltaV }
     export { Entity$5 as Entity }
     export { Component$4 as Component }
   }
-  namespace simplex {
+  declare namespace simplex {
     export { snoise }
     export { recursiveSNoise }
+    export { percentileByOctaves }
   }
   export namespace Station {
-    export { IDS$a as IDS }
-    export { TYPES$a as TYPES }
-    export { getType$6 as getType }
+    export { IDS$8 as IDS }
+    export { TYPES$9 as TYPES }
+    export { getType$5 as getType }
     export { getEfficiency }
     export { Entity$2 as Entity }
     export { Component$1 as Component }
   }
-  namespace system {
+  declare namespace system {
     export { formatSystemCalldata }
     export { getApproveErc20Call }
     export { getEscrowDepositCall }
@@ -421,7 +431,7 @@ declare module '@influenceth/sdk' {
     toDate(): Date;
   }
 
-  namespace ethereum_abis {
+  declare namespace ethereum_abis {
     export const ArvadCitizenGenerator: ({
       anonymous: boolean;
       inputs: {
@@ -1205,7 +1215,7 @@ declare module '@influenceth/sdk' {
       anonymous?: undefined;
     })[]
   }
-  namespace starknet_abis {
+  declare namespace starknet_abis {
     export const Dispatcher: ({
       type: string;
       name: string;
@@ -1778,13 +1788,13 @@ declare module '@influenceth/sdk' {
     })[]
   }
 
-  function toStandard(address: any, explicitChain: any): string;
+  declare function toStandard(address: any, explicitChain: any): string;
 
-  function areEqual(address1: any, address2: any, chain1: any, chain2: any): boolean;
+  declare function areEqual(address1: any, address2: any, chain1: any, chain2: any): boolean;
 
-  function getChain(address: any): 'ethereum' | 'starknet';
+  declare function getChain(address: any): 'ethereum' | 'starknet';
 
-  namespace BONUS_IDS {
+  declare namespace BONUS_IDS {
     const YIELD_1: number
     const YIELD_2: number
     const YIELD_3: number
@@ -1800,21 +1810,21 @@ declare module '@influenceth/sdk' {
     const RARE_EARTH: number
     const FISSILE: number
   }
-  const FREE_TRANSPORT_RADIUS: number
-  const HOPPER_SPEED: number
-  const MAX_LOT_REGIONS: number
-  const MAX_RADIUS: number
-  const RARITIES: string[]
-  const SCANNING_TIME: number
-  namespace SCAN_STATUSES {
+  declare const FREE_TRANSPORT_RADIUS: number
+  declare const HOPPER_SPEED: number
+  declare const MAX_LOT_REGIONS: number
+  declare const MAX_RADIUS: number
+  declare const RARITIES: string[]
+  declare const SCANNING_TIME: number
+  declare namespace SCAN_STATUSES {
     const UNSCANNED: number
     const SURFACE_SCANNING: number
     const SURFACE_SCANNED: number
     const RESOURCE_SCANNING: number
     const RESOURCE_SCANNED: number
   }
-  const SIZES: string[]
-  namespace SPECTRAL_IDS {
+  declare const SIZES: string[]
+  declare namespace SPECTRAL_IDS {
     const C_TYPE: number
     const CM_TYPE: number
     const CI_TYPE: number
@@ -1827,20 +1837,20 @@ declare module '@influenceth/sdk' {
     const M_TYPE: number
     const I_TYPE: number
   }
-  const SPECTRAL_TYPES: {
+  declare const SPECTRAL_TYPES: {
     [x: number]: {
       name: string;
       density: number;
       resources: number[];
     };
   }
-  const TOTAL_ASTEROIDS: number
+  declare const TOTAL_ASTEROIDS: number
 
-  function getAbundanceAtLot(asteroidId: any, lotIndex: any, resourceId: any, abundances: any): number;
+  declare function getAbundanceAtLot(asteroidId: any, lotIndex: any, resourceId: any, abundances: any): number;
 
-  function getAbundanceAtPosition(point: any, settings: any): number;
+  declare function getAbundanceAtPosition(point: any, settings: any): number;
 
-  function getAbundanceMapSettings(asteroidId: any, resourceId: any, abundances: any): {
+  declare function getAbundanceMapSettings(asteroidId: any, resourceId: any, abundances: any): {
     abundance: any;
     octaves: number;
     polyParams: any;
@@ -1848,50 +1858,50 @@ declare module '@influenceth/sdk' {
     pointShift: any[];
   };
 
-  function getAbundances(packed: any): {};
+  declare function getAbundances(packed: any): {};
 
-  function getBaseName(asteroidId: any, spectralType: any): string;
+  declare function getBaseName(asteroidId: any, spectralType: any): string;
 
-  function getBonus(num: any): any;
+  declare function getBonus(num: any): any;
 
-  function getBonusByResource(bonuses: any, resourceId: any): {
+  declare function getBonusByResource(bonuses: any, resourceId: any): {
     bonuses: any[];
     totalBonus: number;
   };
 
-  function getBonuses(packed: any, spectralType: any): any[];
+  declare function getBonuses(packed: any, spectralType: any): any[];
 
-  function getBoostFromPurchaseOrder(purchaseOrder: any): 1 | 2 | 3 | 4;
+  declare function getBoostFromPurchaseOrder(purchaseOrder: any): 1 | 2 | 3 | 4;
 
-  function getClosestLots(_ref: any): number[];
+  declare function getClosestLots(_ref: any): number[];
 
-  function getHopperTravelTime(distance: any, ...args: any[]): number;
+  declare function getHopperTravelTime(distance: any, ...args: any[]): number;
 
-  function getLotDistance(asteroidId: any, originLotIndex: any, destLotIndex: any): number;
+  declare function getLotDistance(asteroidId: any, originLotIndex: any, destLotIndex: any): number;
 
-  function getLotPosition(asteroidId: any, lotIndex: any, ...args: any[]): number[];
+  declare function getLotPosition(asteroidId: any, lotIndex: any, ...args: any[]): number[];
 
-  function getLotRegionTally(...args: any[]): number;
+  declare function getLotRegionTally(...args: any[]): number;
 
-  function getLotTravelTime(asteroidId: any, originLotIndex: any, destLotIndex: any, ...args: any[]): number;
+  declare function getLotTravelTime(asteroidId: any, originLotIndex: any, destLotIndex: any, ...args: any[]): number;
 
-  function getMass(spectralType: any, radius: any): number;
+  declare function getMass(spectralType: any, radius: any): number;
 
-  function getRadius(asteroidId: any): number;
+  declare function getRadius(asteroidId: any): number;
 
-  function getRarity(...args: any[]): string;
+  declare function getRarity(...args: any[]): string;
 
-  function getRegionsOfLotPositions(flatPositions: any, regionTally: any): Int16Array;
+  declare function getRegionsOfLotPositions(flatPositions: any, regionTally: any): Int16Array;
 
-  function getSeed(asteroidId: any): string;
+  declare function getSeed(asteroidId: any): any;
 
-  function getSize(radius: any): string;
+  declare function getSize(radius: any): string;
 
-  function getSpectralType(spectralTypeId: any): string;
+  declare function getSpectralType(spectralTypeId: any): string;
 
-  function getSurfaceArea(asteroidId: any, ...args: any[]): number;
+  declare function getSurfaceArea(asteroidId: any, ...args: any[]): number;
 
-  function getUnpackedAsteroidDetails(packed: any): {
+  declare function getUnpackedAsteroidDetails(packed: any): {
     i: number;
     r: number;
     spectralType: number;
@@ -1905,7 +1915,7 @@ declare module '@influenceth/sdk' {
     };
   }[];
 
-  namespace Entity$4 {
+  declare namespace Entity$4 {
     function getBaseName(asteroid: any): string;
 
     function getRadius(asteroid: any): any;
@@ -1931,11 +1941,11 @@ declare module '@influenceth/sdk' {
 
     function getEscapeVelocity(asteroid: any): number;
 
-    function getSeed(asteroid: any): string;
+    function getSeed(asteroid: any): any;
 
     function getAbundanceAtLot(asteroid: any, lotIndex: any, resourceId: any): number;
   }
-  namespace Component$3 {
+  declare namespace Component$3 {
     function getRadius(celestial: any): any;
 
     function getSurfaceArea(celestial: any): number;
@@ -1959,14 +1969,14 @@ declare module '@influenceth/sdk' {
 
     function getEscapeVelocity(celestial: any): number;
   }
-  const TYPES$d: {
+  declare const TYPES$c: {
     [x: number]: {
       i: number;
       name: string;
       description: string;
     };
   }
-  const CONSTRUCTION_TYPES$1: {
+  declare const CONSTRUCTION_TYPES$1: {
     [x: number]: {
       constructionTime: number;
       requirements: {
@@ -1974,18 +1984,18 @@ declare module '@influenceth/sdk' {
       };
     };
   }
-  namespace CONSTRUCTION_STATUSES {
+  declare namespace CONSTRUCTION_STATUSES {
     const UNPLANNED: number
     const PLANNED: number
     const UNDER_CONSTRUCTION: number
     const OPERATIONAL: number
   }
-  const CONSTRUCTION_STATUS_LABELS: {
+  declare const CONSTRUCTION_STATUS_LABELS: {
     [x: number]: string;
   }
-  const DECONSTRUCTION_PENALTY: number
-  const GRACE_PERIOD: number
-  namespace IDS$d {
+  declare const DECONSTRUCTION_PENALTY: number
+  declare const GRACE_PERIOD: number
+  declare namespace IDS$b {
     const EMPTY_LOT: number
     const WAREHOUSE: number
     const EXTRACTOR: number
@@ -1998,17 +2008,17 @@ declare module '@influenceth/sdk' {
     const HABITAT: number
   }
 
-  function getConstructionTime(buildingType: any, ...args: any[]): number;
+  declare function getConstructionTime(buildingType: any, ...args: any[]): number;
 
-  function getConstructionType$1(type: any): any;
+  declare function getConstructionType$1(type: any): any;
 
-  function getType$9(type: any): any;
+  declare function getType$8(type: any): any;
 
-  const CREWMATE_STACKING_BONUS_EFFICIENCY: number[]
-  const CREWMATE_FOOD_PER_YEAR: number
-  const STARVING_MULTIPLIER: number
+  declare const CREWMATE_STACKING_BONUS_EFFICIENCY: number[]
+  declare const CREWMATE_FOOD_PER_YEAR: number
+  declare const STARVING_MULTIPLIER: number
 
-  function getAbilityBonus(abilityId: any, ...args: any[]): {
+  declare function getAbilityBonus(abilityId: any, ...args: any[]): {
     name: string;
     class: {};
     traits: {};
@@ -2016,17 +2026,17 @@ declare module '@influenceth/sdk' {
     crewmatesMultiplier: number;
   };
 
-  function getCurrentFoodRatio(...args: any[]): number;
+  declare function getCurrentFoodRatio(...args: any[]): number;
 
-  function getFoodMultiplier(...args: any[]): number;
+  declare function getFoodMultiplier(...args: any[]): number;
 
-  function getTimeSinceFed(currentFoodRatio: any, ...args: any[]): number;
+  declare function getTimeSinceFed(currentFoodRatio: any, ...args: any[]): number;
 
-  function getAbilityBonusFromFood(timeSinceFed: any, ...args: any[]): {
+  declare function getAbilityBonusFromFood(timeSinceFed: any, ...args: any[]): {
     foodMultiplier: number;
   };
 
-  namespace ABILITY_IDS {
+  declare namespace ABILITY_IDS {
     const CORE_SAMPLE_TIME: number
     const CORE_SAMPLE_QUALITY: number
     const HOPPER_TRANSPORT_TIME: number
@@ -2048,7 +2058,7 @@ declare module '@influenceth/sdk' {
     const INVENTORY_VOLUME_CAPACITY: number
     const SHIP_INTEGRATION_TIME: number
   }
-  const ABILITY_TYPES: {
+  declare const ABILITY_TYPES: {
     [x: number]: {
       name: string;
       class: number;
@@ -2127,6 +2137,12 @@ declare module '@influenceth/sdk' {
       notFurtherModified?: undefined;
     } | {
       name: string;
+      class: number;
+      notFurtherModified: boolean;
+      departments?: undefined;
+      traits?: undefined;
+    } | {
+      name: string;
       departments: {
         [x: number]: number;
       };
@@ -2145,7 +2161,7 @@ declare module '@influenceth/sdk' {
       notFurtherModified?: undefined;
     };
   }
-  const CLASSES: {
+  declare const CLASSES: {
     0: {
       name: string;
       description: string;
@@ -2171,7 +2187,7 @@ declare module '@influenceth/sdk' {
       description: string;
     };
   }
-  namespace CLASS_IDS {
+  declare namespace CLASS_IDS {
     const UNDECIDED: number
     const PILOT: number
     const ENGINEER: number
@@ -2179,7 +2195,7 @@ declare module '@influenceth/sdk' {
     const MERCHANT: number
     const SCIENTIST: number
   }
-  const CLOTHES: {
+  declare const CLOTHES: {
     1: {
       name: string;
     };
@@ -2304,7 +2320,7 @@ declare module '@influenceth/sdk' {
       name: string;
     };
   }
-  const COLLECTIONS: {
+  declare const COLLECTIONS: {
     1: {
       name: string;
     };
@@ -2318,13 +2334,13 @@ declare module '@influenceth/sdk' {
       name: string;
     };
   }
-  namespace COLLECTION_IDS {
+  declare namespace COLLECTION_IDS {
     const ARVAD_SPECIALIST: number
     const ARVAD_CITIZEN: number
     const ARVAD_LEADERSHIP: number
     const ADALIAN: number
   }
-  const DEPARTMENTS: {
+  declare const DEPARTMENTS: {
     1: {
       name: string;
     };
@@ -2365,7 +2381,7 @@ declare module '@influenceth/sdk' {
       name: string;
     };
   }
-  namespace DEPARTMENT_IDS {
+  declare namespace DEPARTMENT_IDS {
     const NAVIGATION: number
     const EDUCATION: number
     const KNOWLEDGE: number
@@ -2380,7 +2396,7 @@ declare module '@influenceth/sdk' {
     const ARTS_ENTERTAINMENT: number
     const MANAGEMENT: number
   }
-  const FACES: {
+  declare const FACES: {
     0: {
       name: string;
     };
@@ -2406,7 +2422,7 @@ declare module '@influenceth/sdk' {
       name: string;
     };
   }
-  const GENDERS: {
+  declare const GENDERS: {
     1: {
       name: string;
     };
@@ -2414,7 +2430,7 @@ declare module '@influenceth/sdk' {
       name: string;
     };
   }
-  const HAIR_COLORS: {
+  declare const HAIR_COLORS: {
     1: {
       name: string;
     };
@@ -2431,7 +2447,7 @@ declare module '@influenceth/sdk' {
       name: string;
     };
   }
-  const HAIRS: {
+  declare const HAIRS: {
     0: {
       name: string;
     };
@@ -2469,7 +2485,7 @@ declare module '@influenceth/sdk' {
       name: string;
     };
   }
-  const HEADS: {
+  declare const HEADS: {
     0: {
       name: string;
     };
@@ -2522,7 +2538,7 @@ declare module '@influenceth/sdk' {
       name: string;
     };
   }
-  const ITEMS: {
+  declare const ITEMS: {
     0: {
       name: string;
     };
@@ -2551,7 +2567,7 @@ declare module '@influenceth/sdk' {
       name: string;
     };
   }
-  const TITLES: {
+  declare const TITLES: {
     0: {
       name: string;
     };
@@ -2887,11 +2903,11 @@ declare module '@influenceth/sdk' {
       name: string;
     };
   }
-  namespace TRAIT_TYPES {
+  declare namespace TRAIT_TYPES {
     const COSMETIC: string
     const IMPACTFUL: string
   }
-  const TRAITS: {
+  declare const TRAITS: {
     1: {
       name: string;
       type: string;
@@ -3143,7 +3159,7 @@ declare module '@influenceth/sdk' {
       description: string;
     };
   }
-  namespace TRAIT_IDS {
+  declare namespace TRAIT_IDS {
     const DRIVE_SURVIVAL: number
     const DRIVE_SERVICE: number
     const DRIVE_GLORY: number
@@ -3196,7 +3212,7 @@ declare module '@influenceth/sdk' {
     const PROSPECTOR: number
   }
 
-  function getAbility(abilityId: any): {
+  declare function getAbility(abilityId: any): {
     name: string;
     class: number;
     departments: {
@@ -3272,6 +3288,12 @@ declare module '@influenceth/sdk' {
     class?: undefined;
     departments?: undefined;
     notFurtherModified?: undefined;
+  } | {
+    name: string;
+    class: number;
+    notFurtherModified: boolean;
+    departments?: undefined;
+    traits?: undefined;
   } | {
     name: string;
     departments: {
@@ -3292,37 +3314,37 @@ declare module '@influenceth/sdk' {
     notFurtherModified?: undefined;
   };
 
-  function getClass(classId: any): any;
+  declare function getClass(classId: any): any;
 
-  function getClothes(clothesId: any): any;
+  declare function getClothes(clothesId: any): any;
 
-  function getCollection(collectionId: any): any;
+  declare function getCollection(collectionId: any): any;
 
-  function getCombinedTraits(crewmate: any): any[];
+  declare function getCombinedTraits(crewmate: any): any[];
 
-  function getFace(faceId: any): any;
+  declare function getFace(faceId: any): any;
 
-  function getGender(genderId: any): any;
+  declare function getGender(genderId: any): any;
 
-  function getHair(hairId: any): any;
+  declare function getHair(hairId: any): any;
 
-  function getHairColor(hairColorId: any): any;
+  declare function getHairColor(hairColorId: any): any;
 
-  function getHead(headId: any): any;
+  declare function getHead(headId: any): any;
 
-  function getItem(itemId: any): any;
+  declare function getItem(itemId: any): any;
 
-  function getTitle(titleId: any): any;
+  declare function getTitle(titleId: any): any;
 
-  function getTrait(traitId: any): any;
+  declare function getTrait(traitId: any): any;
 
-  function nextTraits(collection: any, ...args: any[]): any[];
+  declare function nextTraits(collection: any, ...args: any[]): any[];
 
-  function packAppearance(details: any): string;
+  declare function packAppearance(details: any): string;
 
-  function unpackAppearance(appearance: any): {};
+  declare function unpackAppearance(appearance: any): {};
 
-  namespace Entity$3 {
+  declare namespace Entity$3 {
     function getCollection(entity: any): any;
 
     function getClass(entity: any): any;
@@ -3347,7 +3369,7 @@ declare module '@influenceth/sdk' {
 
     function getClothes(entity: any): any;
   }
-  namespace Component$2 {
+  declare namespace Component$2 {
     export function getCollection(crewmate: any): any;
 
     export function getClass(crewmate: any): any;
@@ -3372,32 +3394,32 @@ declare module '@influenceth/sdk' {
 
     export function getClothes(crewmate: any): any;
   }
-  namespace STATUSES$5 {
+  declare namespace STATUSES$4 {
     const PACKAGED: number
     const ON_HOLD: number
     const SENT: number
     const COMPLETE: number
   }
-  const MAX_YIELD: number
-  const SAMPLE_TIME: number
-  namespace STATUSES$4 {
+  declare const MAX_YIELD: number
+  declare const SAMPLE_TIME: number
+  declare namespace STATUSES$3 {
     const UNDISCOVERED: number
     const SAMPLING: number
     const SAMPLED: number
     const USED: number
   }
 
-  function getSampleBounds(abundance: any, ...args: any[]): {
+  declare function getSampleBounds(abundance: any, ...args: any[]): {
     lower: any;
     upper: number;
   };
 
-  function getSampleTime(...args: any[]): number;
+  declare function getSampleTime(...args: any[]): number;
 
-  namespace IDS$9 {
+  declare namespace IDS$7 {
     const BASIC: number
   }
-  const TYPES$9: {
+  declare const TYPES$8: {
     [x: number]: {
       i: number;
       cap: number;
@@ -3405,25 +3427,25 @@ declare module '@influenceth/sdk' {
     };
   }
 
-  function getType$5(type: any): any;
+  declare function getType$4(type: any): any;
 
-  function getGroundDelay(dockType: any, dockedShips: any): number;
+  declare function getGroundDelay(dockType: any, dockedShips: any): number;
 
-  namespace Entity$1 {
+  declare namespace Entity$1 {
     function getGroundDelay(dockable: any): number;
   }
-  namespace Component {
+  declare namespace Component {
     function getGroundDelay(dock: any): number;
   }
-  namespace IDS$8 {
+  declare namespace IDS$6 {
     const BASIC_1: number
     export { BASIC_1 as BASIC }
   }
-  namespace STATUSES$3 {
+  declare namespace STATUSES$2 {
     const IDLE: number
     const RUNNING: number
   }
-  const TYPES$8: {
+  declare const TYPES$7: {
     [x: number]: {
       i: number;
       maxMass: number;
@@ -3431,66 +3453,65 @@ declare module '@influenceth/sdk' {
     };
   }
 
-  function getType$4(type: any): any;
+  declare function getType$3(type: any): any;
 
-  function getPolicyDetails(entity: any, ...args: any[]): any;
+  declare function getPolicyDetails(entity: any, ...args: any[]): any;
 
-  function getPrepaidPolicyRate(entity: any): any;
+  declare function getPrepaidPolicyRate(entity: any): any;
 
-  namespace IDS$6 {
+  declare namespace IDS$4 {
     const BASIC_2: number
     export { BASIC_2 as BASIC }
   }
-  const TYPES$6: {
+  declare const TYPES$5: {
     [x: number]: {
       i: number;
       productCap: number;
     };
   }
 
-  function getType$3(type: any): any;
+  declare function getType$2(type: any): any;
 
-  const EXTRACTION_SETUP_TIME: number
-  const MAX_EXTRACTION_TIME: number
-  const MAX_YIELD_PER_RUN: number
-  namespace STATUSES$2 {
+  declare const MAX_EXTRACTION_TIME: number
+  declare const MAX_YIELD_PER_RUN: number
+  declare namespace STATUSES$1 {
     const IDLE_1: number
     export { IDLE_1 as IDLE }
     const RUNNING_1: number
     export { RUNNING_1 as RUNNING }
   }
-  namespace IDS$5 {
+  declare namespace IDS$3 {
     const BASIC_3: number
     export { BASIC_3 as BASIC }
   }
-  const TYPES$5: {
+  declare const TYPES$4: {
     [x: number]: {
       i: number;
     };
   }
 
-  function getExtractionTime(targetYield: any, remainingYield: any, ...args: any[]): number;
+  declare function getExtractionTime(targetYield: any, remainingYield: any, ...args: any[]): number;
 
-  function getType$2(type: any): any;
+  declare function getType$1(type: any): any;
 
-  const Fixed64ONE: bigint
+  declare const Fixed64ONE: bigint
 
-  function realToFixed64(real: any): bigint;
+  declare function realToFixed64(real: any): bigint;
 
-  function fixed64ToReal(fixed: any): number;
+  declare function fixed64ToReal(fixed: any): number;
 
-  const Fixed128ONE: bigint
+  declare const Fixed128ONE: bigint
 
-  function realToFixed128(real: any): bigint;
+  declare function realToFixed128(real: any): bigint;
 
-  function fixed128ToReal(fixed: any): number;
+  declare function fixed128ToReal(fixed: any): number;
 
-  namespace CATEGORIES {
+  declare namespace CATEGORIES {
     const SITE: string
     const PRIMARY: string
     const PROPELLANT: string
   }
-  namespace IDS$c {
+  declare namespace IDS$a {
     const WAREHOUSE_SITE: number
     const EXTRACTOR_SITE: number
     const REFINERY_SITE: number
@@ -3509,11 +3530,11 @@ declare module '@influenceth/sdk' {
     const CARGO_MEDIUM: number
     const CARGO_LARGE: number
   }
-  namespace STATUSES$7 {
+  declare namespace STATUSES$6 {
     const UNAVAILABLE: number
     const AVAILABLE: number
   }
-  const TYPES$c: {
+  declare const TYPES$b: {
     [x: number]: {
       i: number;
       massConstraint: number;
@@ -3525,7 +3546,7 @@ declare module '@influenceth/sdk' {
     };
   }
 
-  function getContents(products: any, ...args: any[]): {
+  declare function getContents(products: any, ...args: any[]): {
     products: {};
     totals: {
       mass: number;
@@ -3533,23 +3554,23 @@ declare module '@influenceth/sdk' {
     };
   };
 
-  function getFilledCapacity(inventoryType: any, ...args: any[]): {
+  declare function getFilledCapacity(inventoryType: any, ...args: any[]): {
     filledMass: any;
     filledVolume: any;
   };
 
-  function getType$8(type: any, ...args: any[]): any;
+  declare function getType$7(type: any, ...args: any[]): any;
 
-  function toId(asteroidId: any, lotIndex: any): number;
+  declare function toId(asteroidId: any, lotIndex: any): number;
 
-  function toIndex(lotId: any): number;
+  declare function toIndex(lotId: any): number;
 
-  function toPosition(entityOrLotId: any): {
+  declare function toPosition(entityOrLotId: any): {
     asteroidId: number;
     lotIndex: number;
   };
 
-  const TYPES$4: {
+  declare const TYPES$3: {
     [x: number]: {
       min: number;
       max: number;
@@ -3559,43 +3580,43 @@ declare module '@influenceth/sdk' {
     };
   }
 
-  function getNameError(...args: any[]): string;
+  declare function getNameError(...args: any[]): string;
 
-  function getType$1(entityType: any): any;
+  declare function getType(entityType: any): any;
 
-  function getTypeRegex(entityType: any): string;
+  declare function getTypeRegex(entityType: any): string;
 
-  function isNameValid(...args: any[]): boolean;
+  declare function isNameValid(...args: any[]): boolean;
 
-  const FEE_SCALE: number
-  namespace IDS$4 {
+  declare const FEE_SCALE: number
+  declare namespace IDS$2 {
     const LIMIT_BUY: number
     const LIMIT_SELL: number
   }
-  namespace STATUSES$1 {
+  declare namespace STATUSES {
     const UNINITIALIZED: number
     const OPEN: number
     const FILLED: number
     const CANCELLED: number
   }
 
-  function getBuyOrderDeposit(value: any, makerFee: any, ...args: any[]): any;
+  declare function getBuyOrderDeposit(value: any, makerFee: any, ...args: any[]): any;
 
-  function getFillBuyOrderWithdrawals(value: any, makerFee: any, takerFee: any, ...args: any[]): {
+  declare function getFillBuyOrderWithdrawals(value: any, makerFee: any, takerFee: any, ...args: any[]): {
     toExchange: number;
     toPlayer: number;
   };
 
-  function getFillSellOrderPayments(value: any, makerFee: any, takerFee: any, ...args: any[]): {
+  declare function getFillSellOrderPayments(value: any, makerFee: any, takerFee: any, ...args: any[]): {
     toExchange: number;
     toPlayer: number;
   };
 
-  function adjustedFee(fee: any, ...args: any[]): number;
+  declare function adjustedFee(fee: any, ...args: any[]): number;
 
-  function netEffFeeBonus(bonus: any, ...args: any[]): any;
+  declare function netEffFeeBonus(bonus: any, ...args: any[]): any;
 
-  namespace IDS$3 {
+  declare namespace IDS$1 {
     export const USE_LOT: number
     export const RUN_PROCESS: number
     export const ADD_PRODUCTS: number
@@ -3612,7 +3633,7 @@ declare module '@influenceth/sdk' {
     export const EXTRACT_RESOURCES: number
     export const ASSEMBLE_SHIP: number
   }
-  const TYPES$3: {
+  declare const TYPES$2: {
     [x: number]: {
       name: string;
       isApplicable: (entity: any) => boolean;
@@ -3623,13 +3644,13 @@ declare module '@influenceth/sdk' {
       isExclusive?: undefined;
     };
   }
-  namespace POLICY_IDS {
+  declare namespace POLICY_IDS {
     const PRIVATE: number
     const PUBLIC: number
     const PREPAID: number
     const CONTRACT: number
   }
-  const POLICY_TYPES: {
+  declare const POLICY_TYPES: {
     [x: number]: {
       name: string;
       description: string;
@@ -3648,13 +3669,13 @@ declare module '@influenceth/sdk' {
       removalSystem: string;
     };
   }
-  const MAX_POLICY_DURATION: number
+  declare const MAX_POLICY_DURATION: number
 
-  function getAdaliaPrimeLotRate(policy: any, lotIndex: any): number;
+  declare function getAdaliaPrimeLotRate(policy: any, lotIndex: any): number;
 
-  function isPermitted(crew: any, permission: any, hydratedTarget: any): boolean;
+  declare function isPermitted(crew: any, permission: any, hydratedTarget: any): boolean;
 
-  namespace IDS$1 {
+  declare namespace IDS$c {
     const WATER_ELECTROLYSIS: number
     const WATER_VACUUM_EVAPORATION_DESALINATION: number
     const SABATIER_PROCESS: number
@@ -3697,7 +3718,7 @@ declare module '@influenceth/sdk' {
     const PROPYLENE_POLYMERIZATION: number
     const MAGNESIUM_CHLORIDE_MOLTEN_SALT_ELECTROLYSIS: number
     const SOLVAY_PROCESS: number
-    const BORON_TRIOXIDE_HYDRATION: number
+    const BORIA_HYDRATION: number
     const PYROXENE_ACID_LEACHING_DIGESTION_AND_ION_EXCHANGE: number
     const APATITE_ACID_EXTRACTION: number
     const HYDROGEN_COMBUSTION: number
@@ -3706,8 +3727,8 @@ declare module '@influenceth/sdk' {
     const NITROGEN_CRYOCOOLING_AND_FRACTIONAL_DISTILLATION: number
     const OLIVINE_ACID_LEACHING_AND_CALCINING: number
     const ANORTHITE_FELDSPAR_ACID_LEACHING_AND_CARBONATION: number
-    const SODIUM_CHLORALKALAI_PROCESS: number
-    const POTASSIUM_CHLORALKALAI_PROCESS: number
+    const SODIUM_CHLORALKALI_PROCESS: number
+    const POTASSIUM_CHLORALKALI_PROCESS: number
     const APATITE_ACID_RE_EXTRACTION: number
     const AMMONIUM_CARBONATE_OXALATION: number
     const XENOTIME_HOT_ACID_LEACHING: number
@@ -3731,7 +3752,7 @@ declare module '@influenceth/sdk' {
     const PIDGEON_PROCESS: number
     const POLYPROPYLENE_CHLORINATION_AND_BASIFICATION: number
     const POTATO_GROWING: number
-    const RARE_EARTHS_OXALATION_AND_CALCINATION: number
+    const RARE_EARTH_SULFATES_OXALATION_AND_CALCINATION: number
     const AMMONIA_CHLORINATION: number
     const HALL_HEROULT_PROCESS: number
     const CALCIUM_CHLORIDE_MOLTEN_SALT_ELECTROLYSIS: number
@@ -3753,7 +3774,7 @@ declare module '@influenceth/sdk' {
     const BOROSILICATE_GLASSMAKING: number
     const BALL_BEARING_MACHINING_AND_ASSEMBLY: number
     const LARGE_THRUST_BEARING_MACHINING_AND_ASSEMBLY: number
-    const BORON_TRIOXIDE_MAGNESIOTHERMIC_REDUCTION: number
+    const BORIA_MAGNESIOTHERMIC_REDUCTION: number
     const LITHIUM_CHLORIDE_MOLTEN_SALT_ELECTROLYSIS: number
     const DIEPOXY_STEP_GROWTH_POLYMERIZATION: number
     const RARE_EARTH_OXIDES_ION_EXCHANGE: number
@@ -3801,7 +3822,7 @@ declare module '@influenceth/sdk' {
     const ND_YAG_CZOCHRALSKI_PROCESS: number
     const NICHROME_ALLOYING: number
     const MAGNET_SINTERING_AND_MAGNETIZATION: number
-    const URANIUM_TETRAFLUORIDE_FLUORIDATION: number
+    const URANIUM_TETRAFLUORIDE_OXIDATION: number
     const URANIUM_HEXAFLUORIDE_CENTRIFUGE_CASCADE_ENRICHMENT: number
     const ND_YAG_LASER_ASSEMBLY: number
     const THIN_FILM_RESISTOR_SPUTTERING_AND_LASER_TRIMMING: number
@@ -3812,7 +3833,7 @@ declare module '@influenceth/sdk' {
     const POTASSIUM_HYDROXIDE_CARBONATION: number
     const NOVOLAK_BACTERIA_CULTURING: number
     const FERROCHROMIUM_ALLOYING: number
-    const POTASSIUM_CARBONATE_FLUORIDATION: number
+    const POTASSIUM_CARBONATE_OXIDATION: number
     const RHABDITE_SLAG_ACID_LEACHING: number
     const TANTALATE_NIOBATE_LIQUID_LIQUID_EXTRACTION_AND_REDOX: number
     const CARBON_DIOXIDE_FERROCATALYSIS: number
@@ -3873,8 +3894,25 @@ declare module '@influenceth/sdk' {
     const PEDOT_ALGAE_GROWING: number
     const BPA_ALGAE_GROWING: number
     const NOVOLAK_ALGAE_GROWING: number
+    const HYDROCHLORIC_REDOX: number
+    const HYDROFLUORIC_REDOX: number
+    const METHANE_COMBUSTION: number
+    const CARBON_MONOXIDE_ARC_DECOMPOSITION: number
+    const HYDROGEN_PROPELLANT_UNBUNDLING: number
+    const SHUTTLE_INTEGRATION: number
+    const LIGHT_TRANSPORT_INTEGRATION: number
+    const HEAVY_TRANSPORT_INTEGRATION: number
+    const WAREHOUSE_CONSTRUCTION: number
+    const EXTRACTOR_CONSTRUCTION: number
+    const REFINERY_CONSTRUCTION: number
+    const BIOREACTOR_CONSTRUCTION: number
+    const FACTORY_CONSTRUCTION: number
+    const SHIPYARD_CONSTRUCTION: number
+    const SPACEPORT_CONSTRUCTION: number
+    const MARKETPLACE_CONSTRUCTION: number
+    const HABITAT_CONSTRUCTION: number
   }
-  const TYPES$1: {
+  declare const TYPES$d: {
     [x: number]: {
       i: number;
       name: string;
@@ -3888,10 +3926,21 @@ declare module '@influenceth/sdk' {
       outputs: {
         [x: number]: number;
       };
+    } | {
+      i: number;
+      name: string;
+      processorType: number;
+      setupTime: number;
+      recipeTime: number;
+      inputs: {
+        [x: number]: number;
+      };
+      batched?: undefined;
+      outputs?: undefined;
     };
   }
 
-  function getListByProcessorType(processorType: any): {
+  declare function getListByProcessorType(processorType: any): ({
     i: number;
     name: string;
     processorType: number;
@@ -3904,15 +3953,29 @@ declare module '@influenceth/sdk' {
     outputs: {
       [x: number]: number;
     };
-  }[];
+  } | {
+    i: number;
+    name: string;
+    processorType: number;
+    setupTime: number;
+    recipeTime: number;
+    inputs: {
+      [x: number]: number;
+    };
+    batched?: undefined;
+    outputs?: undefined;
+  })[];
 
-  function getProcessingTime(processId: any, recipes: any, ...args: any[]): number;
+  declare function getOutputs(processId: any, recipes: any, ...args: any[]): {};
 
-  function getSetupTime(processId: any, ...args: any[]): number;
+  declare function getProcessingTime(processId: any, recipes: any, ...args: any[]): number;
 
-  function getType(type: any): any;
+  declare function getSetupTime(processId: any, ...args: any[]): number;
 
-  namespace IDS$2 {
+  declare function getType$9(type: any): any;
+
+  declare namespace IDS$e {
+    export const CONSTRUCTION: number
     const REFINERY_1: number
     export { REFINERY_1 as REFINERY }
     const FACTORY_1: number
@@ -3923,20 +3986,21 @@ declare module '@influenceth/sdk' {
     export { SHIPYARD_1 as SHIPYARD }
     export const DRY_DOCK: number
   }
-  namespace STATUSES {
+  declare namespace STATUSES$7 {
     const IDLE_2: number
     export { IDLE_2 as IDLE }
     const RUNNING_2: number
     export { RUNNING_2 as RUNNING }
   }
-  namespace CATEGORIES$1 {
+  declare namespace CATEGORIES$1 {
     export const ACID: string
     export const ADHESIVE: string
     export const ALLOY: string
     export const BASE: string
     export const CARBONATE: string
     export const CERAMIC: string
-    export const CONSTRUCTION: string
+    const CONSTRUCTION_1: string
+    export { CONSTRUCTION_1 as CONSTRUCTION }
     export const CRYSTAL: string
     export const ELECTROMECHANICAL: string
     export const ELECTRONICS: string
@@ -3982,14 +4046,14 @@ declare module '@influenceth/sdk' {
     export const TOOL: string
     export const VOLATILE: string
   }
-  namespace CLASSIFICATIONS {
+  declare namespace CLASSIFICATIONS {
     const ASSEMBLY: string
     const CROP: string
     const MANUFACTURED_GOOD: string
     const RAW_MATERIAL: string
     const REFINED_MATERIAL: string
   }
-  namespace IDS$e {
+  declare namespace IDS$d {
     export const WATER: number
     export const HYDROGEN: number
     export const AMMONIA: number
@@ -4231,7 +4295,7 @@ declare module '@influenceth/sdk' {
     export const THERMAL_MODULE: number
     export const PROPULSION_MODULE: number
   }
-  const TYPES$e: {
+  declare const TYPES$e: {
     [x: number]: {
       i: number;
       name: string;
@@ -4243,14 +4307,14 @@ declare module '@influenceth/sdk' {
     };
   }
 
-  function getListByCategory(category: any): number[];
+  declare function getListByCategory(category: any): number[];
 
-  function getListByClassification(classification: any): number[];
+  declare function getListByClassification(classification: any): number[];
 
-  function getType$a(type: any): any;
+  declare function getType$a(type: any): any;
 
-  const MIN_ROUNDS: number
-  namespace IDS {
+  declare const MIN_ROUNDS: number
+  declare namespace IDS {
     const STARDUST: number
     const GROUNDBREAKING: number
     const KEEP_EM_SEPARATED: number
@@ -4260,26 +4324,26 @@ declare module '@influenceth/sdk' {
     const ALWAYS_LEAVE_A_NOTE: number
     const GREATNESS: number
   }
-  const TYPES: {
+  declare const TYPES: {
     [x: number]: {
       name: string;
       choices: number[];
       maxChance: number;
     };
   }
-  namespace ACTION_IDS {
+  declare namespace ACTION_IDS {
     const SAMPLE_DEPOSIT_STARTED: number
     const EXTRACT_RESOURCE_STARTED: number
     const PROCESS_PRODUCTS_STARTED: number
     const ASSEMBLE_SHIP_STARTED: number
     const TRANSIT_BETWEEN_STARTED: number
   }
-  const ACTION_TYPES: {
+  declare const ACTION_TYPES: {
     [x: number]: {
       events: number[];
     };
   }
-  const CONSTRUCTION_TYPES: {
+  declare const CONSTRUCTION_TYPES: {
     [x: number]: {
       setupTime: number;
       constructionTime: number;
@@ -4288,22 +4352,22 @@ declare module '@influenceth/sdk' {
       };
     };
   }
-  const EMERGENCY_PROP_GEN_TIME: number
-  namespace IDS$b {
+  declare const EMERGENCY_PROP_GEN_TIME: number
+  declare namespace IDS$9 {
     const ESCAPE_MODULE_1: number
     export { ESCAPE_MODULE_1 as ESCAPE_MODULE }
     export const LIGHT_TRANSPORT: number
     export const HEAVY_TRANSPORT: number
     export const SHUTTLE: number
   }
-  namespace STATUSES$6 {
+  declare namespace STATUSES$5 {
     const UNDER_CONSTRUCTION_1: number
     export { UNDER_CONSTRUCTION_1 as UNDER_CONSTRUCTION }
     const AVAILABLE_1: number
     export { AVAILABLE_1 as AVAILABLE }
     export const DISABLED: number
   }
-  const TYPES$b: {
+  declare const TYPES$a: {
     [x: number]: {
       i: number;
       name: string;
@@ -4333,21 +4397,21 @@ declare module '@influenceth/sdk' {
     };
   }
 
-  function getConstructionType(type: any): any;
+  declare function getConstructionType(type: any): any;
 
-  function getEmergencyPropellantAmount(generationTime: any, propLimit: any, inventoryConfig: any, startingAmount: any, ...args: any[]): number;
+  declare function getEmergencyPropellantAmount(generationTime: any, propLimit: any, inventoryConfig: any, startingAmount: any, ...args: any[]): number;
 
-  function getPropellantRequirement(shipType: any, wetMass: any, deltaV_ms: any, ...args: any[]): number;
+  declare function getPropellantRequirement(shipType: any, wetMass: any, deltaV_ms: any, ...args: any[]): number;
 
-  function getTimeUntilEmergencyPropellantFull(inventoryConfig: any, propLimit: any, startingAmount: any, ...args: any[]): number;
+  declare function getTimeUntilEmergencyPropellantFull(inventoryConfig: any, propLimit: any, startingAmount: any, ...args: any[]): number;
 
-  function getType$7(type: any): any;
+  declare function getType$6(type: any): any;
 
-  function getVariant(variant: any): any;
+  declare function getVariant(variant: any): any;
 
-  function propellantToDeltaV(shipType: any, wetMass: any, propellantMass: any, ...args: any[]): number;
+  declare function propellantToDeltaV(shipType: any, wetMass: any, usedPropellantMass: any, ...args: any[]): number;
 
-  namespace Entity$5 {
+  declare namespace Entity$5 {
     function getConstructionType(entity: any): any;
 
     function getType(entity: any): any;
@@ -4356,13 +4420,13 @@ declare module '@influenceth/sdk' {
 
     function getPropellantRequirement(ship: any, deltaV_ms: any, ...args: any[]): number;
 
-    function propellantToDeltaV(ship: any, propellantMass: any, ...args: any[]): number;
+    function propellantToDeltaV(ship: any, usedPropellantMass: any, ...args: any[]): number;
 
     function getEmergencyPropellantAmount(ship: any, ...args: any[]): number;
 
     function getTimeUntilEmergencyPropellantFull(ship: any, ...args: any[]): number;
   }
-  namespace Component$4 {
+  declare namespace Component$4 {
     function getConstructionType(ship: any): any;
 
     function getType(ship: any): any;
@@ -4370,17 +4434,19 @@ declare module '@influenceth/sdk' {
     function getVariant(ship: any): any;
   }
 
-  function snoise(v: any): any;
+  declare function snoise(v: any): any;
 
-  function recursiveSNoise(p: any, pers: any, octaves: any): number;
+  declare function recursiveSNoise(p: any, pers: any, octaves: any): number;
 
-  namespace IDS$a {
+  declare function percentileByOctaves(noise: any, octaves: any): any;
+
+  declare namespace IDS$8 {
     export const STANDARD_QUARTERS: number
     export const EXPANDED_QUARTERS: number
     const HABITAT_1: number
     export { HABITAT_1 as HABITAT }
   }
-  const TYPES$a: {
+  declare const TYPES$9: {
     [x: number]: {
       i: number;
       cap: number;
@@ -4389,58 +4455,57 @@ declare module '@influenceth/sdk' {
     };
   }
 
-  function getType$6(type: any): any;
+  declare function getType$5(type: any): any;
 
-  function getEfficiency(stationType: any, population: any): any;
+  declare function getEfficiency(stationType: any, population: any): any;
 
-  namespace Entity$2 {
+  declare namespace Entity$2 {
     function getEfficiency(stationable: any): any;
   }
-  namespace Component$1 {
+  declare namespace Component$1 {
     function getEfficiency(station: any): any;
   }
 
-  function formatSystemCalldata(name: any, vars: any, ...args: any[]): any;
+  declare function formatSystemCalldata(name: any, vars: any, ...args: any[]): any;
 
-  function getApproveErc20Call(amount: any, erc20Address: any, dispatcherAddress: any): {
+  declare function getApproveErc20Call(amount: any, erc20Address: any, dispatcherAddress: any): {
     contractAddress: any;
     entrypoint: any;
-    calldata: import('starknet').Calldata;
+    calldata: any;
   };
 
-  function getEscrowDepositCall(amount: any, depositHook: any, withdrawHook: any, escrowAddress: any, swayAddress: any): {
+  declare function getEscrowDepositCall(amount: any, depositHook: any, withdrawHook: any, escrowAddress: any, swayAddress: any): {
     contractAddress: any;
     entrypoint: any;
-    calldata: import('starknet').Calldata;
+    calldata: any;
   };
 
-  function getEscrowWithdrawCall(withdrawals: any, depositCaller: any, withdrawHook: any, withdrawData: any, escrowAddress: any, swayAddress: any): {
+  declare function getEscrowWithdrawCall(withdrawals: any, depositCaller: any, withdrawHook: any, withdrawData: any, escrowAddress: any, swayAddress: any): {
     contractAddress: any;
     entrypoint: any;
-    calldata: import('starknet').Calldata;
+    calldata: any;
   };
 
-  function getFormattedCall(contractAddress: any, entrypoint: any, calldata: any): {
+  declare function getFormattedCall(contractAddress: any, entrypoint: any, calldata: any): {
     contractAddress: any;
     entrypoint: any;
-    calldata: import('starknet').Calldata;
+    calldata: any;
   };
 
-  function getRunSystemCall(name: any, input: any, dispatcherAddress: any, ...args: any[]): {
+  declare function getRunSystemCall(name: any, input: any, dispatcherAddress: any, ...args: any[]): {
     contractAddress: any;
     entrypoint: any;
-    calldata: import('starknet').Calldata;
+    calldata: any;
   };
 
-  function getTransferWithConfirmationCall(recipient: any, amount: any, memo: any, consumerAddress: any, swayAddress: any): {
+  declare function getTransferWithConfirmationCall(recipient: any, amount: any, memo: any, consumerAddress: any, swayAddress: any): {
     contractAddress: any;
     entrypoint: any;
-    calldata: import('starknet').Calldata;
+    calldata: any;
   };
 
-  const Systems: {}
+  declare const Systems: {}
   export {
-    address as Address,
     assets as Assets,
     crew as Crew,
     delivery as Delivery,
