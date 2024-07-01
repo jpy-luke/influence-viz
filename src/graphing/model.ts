@@ -13,7 +13,8 @@ const preferredSources = new Map([
   ['Chlorine', 'Sodium Chloralkali Process'],
   ['Hydrochloric Acid', 'Hydrochloric Redox'],
   ['Hydrofluoric Acid', 'Apatite Acid Extraction'],
-  ['Oxygen', 'Water Electrolysis']
+  ['Oxygen', 'Water Electrolysis'],
+  ['Iron', 'Taenite Electrolytic Refining'],
 ])
 
 class Product implements NodeLike {
