@@ -6,8 +6,6 @@ using [Vue 3](https://vuejs.org/), utilizing the [Graphology](https://github.com
 the [Influence SDK](https://github.com/influenceth/sdk) as static
 game data source.
 
-Application can be found at https://influence-viz.threehappylads.fi.
-
 This project is licensed under the AGPLv3 license. See the [LICENSE](LICENSE) file for details.
 
 ## Features
